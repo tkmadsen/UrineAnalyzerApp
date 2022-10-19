@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "808979605641",
+    "project_id": "urineanalyzerapp",
+    "storage_bucket": "urineanalyzerapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808979605641:android:7a112862d10a0b1b3ffe58",
+        "android_client_info": {
+          "package_name": "com.au615584.urineanalyzerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808979605641-va21tu47ja63nud252t6gukh264l4cpf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD92JMhRKOlLzKM90SAd0MV9NNrI61OYN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808979605641-va21tu47ja63nud252t6gukh264l4cpf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

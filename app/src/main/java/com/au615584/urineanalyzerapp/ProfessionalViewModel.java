@@ -9,9 +9,10 @@ public class ProfessionalViewModel {
         repository = Repository.getInstance();
     }
 
-    public void SetLocal(Activity acticity, String langCode){
-        repository.SetLocal(acticity,langCode);
-
+    public void SetLocal(Activity activity, String langCode){
+        repository.SetLocal(activity,langCode);
+        //For test
+        //repository.addPatientResult();
     }
 
 }

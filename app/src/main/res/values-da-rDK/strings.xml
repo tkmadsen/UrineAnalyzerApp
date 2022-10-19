@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="backBtn">Tilbage</string>
+    <string name="CPRdialog">Velkommen 2103971554</string>
+    <string name="app_name">UrineAnalyzerApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome">Velkommen!</string>
+    <string name="scan">Scan venligst dit sundhedskort</string>
+    <string name="guide">1. Opsaml midtstråleurin \n2. Placer stix i urin (in x secs maybe?)</string>
+    <string name="lanBtn">Skift sprog</string>
+    <string name="btnChooseLan">Vælg</string>
+    <string name="txtSetAnalysis">Sæt analysetype</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Kode</string>
+    <string name="login_failed">"Login fejlede"</string>
+    <string name="TxtLogin">Tast kode</string>
+    <string name="errorInvalidPassword">Forkert kode</string>
+    <string name="errorUserSignIn">Login fejlede</string>
+    <string name="guide2Txt">3. Dub stix med papir</string>
+    <string name="guide3Txt">4. Placer urinstix i åbningen til højre for skærmen \n5. Tryk på knap indtil stixen fastholdes af systemet</string>
+    <string name="correctTestTXt">Resultat modtaget</string>
+</resources>

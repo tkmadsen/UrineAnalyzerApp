@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">UrineAnalyzerApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome">Welcome!</string>
+    <string name="scan">Please scan social security card</string>
+    <string name="guide">1. Collect midstream urine sample \n2. Place stix in urine (in x secs maybe?)</string>
+    <string name="lanBtn">Change language</string>
+    <string name="btnChooseLan">Choose</string>
+    <string name="txtSetAnalysis">Set analysis type</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="TxtLogin">Please enter password</string>
+    <string name="errorInvalidPassword">Invalid password</string>
+    <string name="errorUserSignIn">Login failed</string>
+    <string name="guide2Txt">3. Dab stix with paper</string>
+    <string name="guide3Txt">4. Place urine stix in opening on the right side of the screen \n5. Push button until stix is fastened by the device</string>
+    <string name="correctTestTXt">Result received</string>
+    <string name="backBtn">Back</string>
+    <string name="CPRdialog">Welcome 2103971554</string>
+</resources>

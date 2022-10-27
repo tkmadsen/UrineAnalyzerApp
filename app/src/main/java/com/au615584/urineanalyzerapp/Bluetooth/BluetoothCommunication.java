@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
@@ -12,6 +13,7 @@ import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
 import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
@@ -22,11 +24,12 @@ public class BluetoothCommunication {
   private BluetoothDevice btDevice;
   BluetoothSocket socket;
   private Set<BluetoothDevice> pairedDevices;
+  private String readMessage = null;
 
   public boolean isBluetoothEnabled() {
     btAdapter = BluetoothAdapter.getDefaultAdapter();
 
-    if(btAdapter.isEnabled()) {
+    if (btAdapter.isEnabled()) {
       return true;
     } else {
       return false;
@@ -39,7 +42,7 @@ public class BluetoothCommunication {
     String address = null;
     pairedDevices = btAdapter.getBondedDevices();
 
-    if(pairedDevices.size() < 1) {
+    if (pairedDevices.size() < 1) {
       Toast.makeText(UrineAnalyzerApplication.getAppContext(), "No paired devices found", Toast.LENGTH_SHORT).show();
     } else {
       for (BluetoothDevice btDevice : pairedDevices) {
@@ -57,11 +60,10 @@ public class BluetoothCommunication {
     final BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
     try {
       new ConnectThread1(device).start();
-    } catch(IOException e) {
+    } catch (IOException e) {
       Log.e("BTConnection", "Fail in starting connectThread", e);
     }
   }
-
 
 
   public class ConnectThread1 extends Thread {
@@ -75,7 +77,7 @@ public class BluetoothCommunication {
         UUID uuid = UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ee");
         Log.d("BTConnection", "Creating RfcommSocket");
         tmp = btDevice.createRfcommSocketToServiceRecord(uuid);
-      } catch(IOException e) {
+      } catch (IOException e) {
         Log.e("BTConnection", "Socket's create method failed", e);
       }
 
@@ -89,12 +91,36 @@ public class BluetoothCommunication {
         Log.e("BTConnection", "Socket's connect method failed", connectException);
       }
       write();
+      readMessage();
     }
 
     public void write() throws IOException {
       String msg = "Hej bac";
       OutputStream outputStream = socket.getOutputStream();
       outputStream.write(msg.getBytes());
+    }
+
+    public void readMessage() throws IOException {
+      InputStream mmInputStream = socket.getInputStream();
+      byte[] buffer = new byte[256];
+      int bytes;
+
+      try {
+        bytes = mmInputStream.read(buffer);
+        String readMessage = new String(buffer, 0, bytes);
+        Log.d("BTConnection", "Received: " + readMessage);
+        //mmSocket.close();
+      } catch (IOException e) {
+        Log.e("BTConnection", "Problems occurred!");
+      }
+    }
+
+
+    public String receive() throws IOException {
+      readMessage = null;
+      //readMessage = readMessage();
+
+      return readMessage;
     }
   }
 }

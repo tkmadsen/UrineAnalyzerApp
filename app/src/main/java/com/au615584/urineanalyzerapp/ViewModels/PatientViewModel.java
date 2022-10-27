@@ -12,7 +12,6 @@ public class PatientViewModel {
     repository = Repository.getInstance();
   }
 
-  /*
   public void connectToRemoteDevice(){
     repository.connectToRemoteDevice();
   }
@@ -21,6 +20,7 @@ public class PatientViewModel {
     return repository.isBluetoothEnabled();
   }
 
+  /*
   public String receiveMessage() {
     String message = repository.receiveMessage();
     Log.d("PatientViewModel", message);

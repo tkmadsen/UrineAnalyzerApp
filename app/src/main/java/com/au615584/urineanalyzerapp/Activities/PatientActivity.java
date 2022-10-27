@@ -34,7 +34,7 @@ public class PatientActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> signInLauncher;
     private ActivityResultLauncher<Intent> bluetoothEnableLauncher;
     private PatientViewModel vm;
-    private BluetoothCommunication btConnection;
+    //private BluetoothCommunication btConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,19 +50,6 @@ public class PatientActivity extends AppCompatActivity {
             vm.connectToRemoteDevice();
         }*/
 
-        btConnection = new BluetoothCommunication();
-        if(btConnection.isBluetoothEnabled()) {
-            btConnection.connectToRemoteDevice();
-            //btConnection.write("Hej RPi");
-        } else {
-            Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
-            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            bluetoothEnableLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
-                if (result.getResultCode() == 0) {
-                    Toast.makeText(this,"Turn on Bluetooth",Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
         /*
         while (vm.isBluetoothEnabled() == false) {
             Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
@@ -92,6 +79,19 @@ public class PatientActivity extends AppCompatActivity {
                 .replace(R.id.fraglist, welcomeFragment, "WELCOME_FRAGMENT")
                 .commitNow();
 
+
+        if(vm.isBluetoothEnabled()) {
+            vm.connectToRemoteDevice();
+            //btConnection.write("Hej RPi");
+        } else {
+            Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
+            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            bluetoothEnableLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() == 0) {
+                    Toast.makeText(this,"Turn on Bluetooth",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override

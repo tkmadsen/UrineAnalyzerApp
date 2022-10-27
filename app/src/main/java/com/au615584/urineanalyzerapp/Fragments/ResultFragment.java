@@ -1,4 +1,4 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.au615584.urineanalyzerapp.R;
 
 /**
  * A simple {@link Fragment} subclass.

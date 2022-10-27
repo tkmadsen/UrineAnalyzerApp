@@ -1,4 +1,4 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.au615584.urineanalyzerapp.R;
+import com.au615584.urineanalyzerapp.ViewModels.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;

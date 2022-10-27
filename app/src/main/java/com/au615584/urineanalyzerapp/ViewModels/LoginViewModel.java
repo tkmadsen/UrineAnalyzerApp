@@ -1,4 +1,4 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.ViewModels;
 
 import android.app.Activity;
 import android.app.Application;
@@ -6,6 +6,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+
+import com.au615584.urineanalyzerapp.Constants;
+import com.au615584.urineanalyzerapp.Repository;
 
 public class LoginViewModel {
     private Repository repository;

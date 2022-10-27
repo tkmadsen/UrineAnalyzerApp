@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Model.PatientResult;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,9 +26,11 @@ public class Repository {
     private MutableLiveData<Boolean> isUserSignedIn;
     FirebaseFirestore db;
     private DocumentReference patientResultsRef;
+    //private BluetoothConnection btConnection;
 
     private Repository() {
         db = FirebaseFirestore.getInstance();
+        //btConnection = new BluetoothConnection();
     }
 
     //Singleton patten
@@ -93,4 +96,18 @@ public class Repository {
                     }
                 });
     }
+/*
+  public void connectToRemoteDevice() {
+        btConnection.connectToRemoteDevice();
+  }
+
+  public boolean isBluetoothEnabled() {
+        return btConnection.isBluetoothEnabled();
+  }
+
+  public String receiveMessage() {
+        return btConnection.recive();
+  }
+
+   */
 }

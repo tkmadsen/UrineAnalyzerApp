@@ -1,4 +1,4 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.au615584.urineanalyzerapp.AnalysisType;
+import com.au615584.urineanalyzerapp.R;
 
 import java.util.ArrayList;
 

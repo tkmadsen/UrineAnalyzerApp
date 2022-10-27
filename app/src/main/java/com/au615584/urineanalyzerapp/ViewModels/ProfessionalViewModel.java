@@ -1,6 +1,8 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.ViewModels;
 
 import android.app.Activity;
+
+import com.au615584.urineanalyzerapp.Repository;
 
 public class ProfessionalViewModel {
     Repository repository;

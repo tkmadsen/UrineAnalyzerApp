@@ -1,43 +1,88 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
+import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
+import com.au615584.urineanalyzerapp.Fragments.ResultFragment;
+import com.au615584.urineanalyzerapp.Fragments.WelcomeFragment;
+import com.au615584.urineanalyzerapp.R;
+import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
+import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 
 public class PatientActivity extends AppCompatActivity {
 
     private Button btnTest;
     private ImageButton btnPro;
     private ActivityResultLauncher<Intent> signInLauncher;
+    private ActivityResultLauncher<Intent> bluetoothEnableLauncher;
+    private PatientViewModel vm;
+    private BluetoothCommunication btConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
         btnTest=findViewById(R.id.testB);
         btnPro=findViewById(R.id.proB);
+        vm= new PatientViewModel();
+
+        Log.d("onCreate1 Patient Activity", "Checking if bluetooth is enabled ");
+        /*
+        if(vm.isBluetoothEnabled() == true) {
+            Log.d("onCreate2 Patient Activity", "Bluetooth is enabled");
+            vm.connectToRemoteDevice();
+        }*/
+
+        btConnection = new BluetoothCommunication();
+        if(btConnection.isBluetoothEnabled()) {
+            btConnection.connectToRemoteDevice();
+            //btConnection.write("Hej RPi");
+        } else {
+            Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
+            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            bluetoothEnableLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() == 0) {
+                    Toast.makeText(this,"Turn on Bluetooth",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        /*
+        while (vm.isBluetoothEnabled() == false) {
+            Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
+            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            bluetoothEnableLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
+                if (result.getResultCode() == 0) {
+                    Toast.makeText(this,"Turn on Bluetooth",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }*/
+
+
+
         signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Toast.makeText(this,"Professional view",Toast.LENGTH_SHORT).show();
             }
         });
 
-// Initialize fragment
+        //Initialize fragment
         Fragment guideFragment=new GuideFragment();
         Fragment welcomeFragment=new WelcomeFragment();
         Fragment resultFragment=new ResultFragment();
@@ -46,7 +91,6 @@ public class PatientActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fraglist, welcomeFragment, "WELCOME_FRAGMENT")
                 .commitNow();
-
 
 
         btnTest.setOnClickListener(new View.OnClickListener() {

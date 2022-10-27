@@ -1,4 +1,4 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -8,15 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.au615584.urineanalyzerapp.Activities.PatientActivity;
+import com.au615584.urineanalyzerapp.Adapters.AnalysisTypeAdapter;
+import com.au615584.urineanalyzerapp.Adapters.LanguageAdapter;
+import com.au615584.urineanalyzerapp.AnalysisType;
+import com.au615584.urineanalyzerapp.Language;
+import com.au615584.urineanalyzerapp.R;
+import com.au615584.urineanalyzerapp.ViewModels.ProfessionalViewModel;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ProfessionalAcitivity extends AppCompatActivity implements LanguageAdapter.ILanguageItemClickedListener, AnalysisTypeAdapter.IAnalysisTypeItemClickedListener {
     //data (should probably come from a ViewModel)
@@ -103,7 +109,6 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
         intent.setClass(activity, activity.getClass());
         activity.startActivity(intent);
         activity.finish();
-
     }
 
 

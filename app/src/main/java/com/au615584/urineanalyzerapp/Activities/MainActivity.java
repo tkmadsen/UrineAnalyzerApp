@@ -1,8 +1,10 @@
-package com.au615584.urineanalyzerapp;
+package com.au615584.urineanalyzerapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.au615584.urineanalyzerapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

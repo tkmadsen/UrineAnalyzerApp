@@ -3,6 +3,9 @@ package com.au615584.urineanalyzerapp.ViewModels;
 import android.app.Activity;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
+import com.au615584.urineanalyzerapp.FragmentState;
 import com.au615584.urineanalyzerapp.Repository;
 
 public class PatientViewModel {
@@ -20,12 +23,7 @@ public class PatientViewModel {
     return repository.isBluetoothEnabled();
   }
 
-  /*
-  public String receiveMessage() {
-    String message = repository.receiveMessage();
-    Log.d("PatientViewModel", message);
-    return message;
+  public LiveData<String> state() {
+    return repository.state();
   }
-
-   */
 }

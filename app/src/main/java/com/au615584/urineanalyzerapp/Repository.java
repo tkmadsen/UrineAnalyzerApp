@@ -28,6 +28,7 @@ public class Repository {
     FirebaseFirestore db;
     private DocumentReference patientResultsRef;
     private BluetoothCommunication btConnection;
+    private MutableLiveData<String> state;
 
     private Repository() {
         db = FirebaseFirestore.getInstance();
@@ -44,8 +45,6 @@ public class Repository {
     }
 
     public void SignIn(String pw, Activity activity) {
-
-
         if (pw.equals("1234")) {
             Log.d(Constants.TAG_Rep, "User signed in");
             isUserSignedIn.postValue(true);
@@ -106,11 +105,7 @@ public class Repository {
         return btConnection.isBluetoothEnabled();
   }
 
-  /*
-  public String receiveMessage() {
-        return btConnection.recive();
+  public LiveData<String> state() {
+        return btConnection.fragmentState();
   }
-
-   */
-
 }

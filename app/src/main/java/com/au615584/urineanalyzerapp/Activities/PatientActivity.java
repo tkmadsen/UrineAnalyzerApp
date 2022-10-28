@@ -5,6 +5,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -93,10 +95,35 @@ public class PatientActivity extends AppCompatActivity {
             });
         }
 
+        vm.state().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String state) {
+                // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
+                switch(state) {
+                    case "Result":
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")
+                                .commit();
+                        break;
+                    case "Guide":
+                        showDialouge();
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
+                                .commit();
+                        break;
+                    case "Welcome":
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,welcomeFragment,"WELCOME_FRAGMENT")
+                                .commit();
+                        break;
+                }
+            }
+        });
+        /*
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
+                // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
                 if (guideFragment != null && guideFragment.isVisible()) {
                     getSupportFragmentManager()
                             .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")
@@ -117,6 +144,7 @@ public class PatientActivity extends AppCompatActivity {
                 }
             }
         });
+        */
         btnPro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

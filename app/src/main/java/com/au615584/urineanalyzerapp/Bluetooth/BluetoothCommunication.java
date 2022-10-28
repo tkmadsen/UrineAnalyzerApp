@@ -8,6 +8,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
 
 import org.checkerframework.checker.units.qual.A;
@@ -25,6 +28,11 @@ public class BluetoothCommunication {
   BluetoothSocket socket;
   private Set<BluetoothDevice> pairedDevices;
   private String readMessage = null;
+  public MutableLiveData<String> state;
+
+  public BluetoothCommunication() {
+    state = new MutableLiveData<>("Welcome");
+  }
 
   public boolean isBluetoothEnabled() {
     btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -65,6 +73,30 @@ public class BluetoothCommunication {
     }
   }
 
+  public void changeState(String btMessage) {
+    int rpiProtocol = btMessage.charAt(0);
+    switch(rpiProtocol) {
+      case 1:
+        state.postValue("Guide");
+        break;
+      case 2:
+        state.postValue("Guide"); //TODO evt lav en processing fragment
+        break;
+      case 3:
+        state.postValue("Result");
+        break;
+      default:
+        state.postValue("Welcome");
+        break;
+    }
+  }
+
+  public LiveData<String> fragmentState() {
+    if(state == null) {
+      state = new MutableLiveData<>();
+    }
+    return state;
+  }
 
   public class ConnectThread1 extends Thread {
 
@@ -90,7 +122,7 @@ public class BluetoothCommunication {
       } catch (IOException connectException) {
         Log.e("BTConnection", "Socket's connect method failed", connectException);
       }
-      write();
+      //write();
       readMessage();
     }
 
@@ -101,20 +133,23 @@ public class BluetoothCommunication {
     }
 
     public void readMessage() throws IOException {
-      InputStream mmInputStream = socket.getInputStream();
-      byte[] buffer = new byte[256];
-      int bytes;
+      String readMessage1 = null;
+      while(readMessage1 == null) {
+        InputStream mmInputStream = socket.getInputStream();
+        byte[] buffer = new byte[1048];
+        int bytes;
 
-      try {
-        bytes = mmInputStream.read(buffer);
-        String readMessage = new String(buffer, 0, bytes);
-        Log.d("BTConnection", "Received: " + readMessage);
-        //mmSocket.close();
-      } catch (IOException e) {
-        Log.e("BTConnection", "Problems occurred!");
+        try {
+          bytes = mmInputStream.read(buffer);
+          readMessage1 = new String(buffer, 0, bytes);
+          Log.d("BTConnection", "Received: " + readMessage1);
+          changeState(readMessage1);
+        } catch (IOException e) {
+          Log.e("BTConnection", "Problems occurred!");
+        }
       }
-    }
 
+    }
 
     public String receive() throws IOException {
       readMessage = null;

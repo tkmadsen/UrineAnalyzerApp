@@ -22,7 +22,7 @@ public class LoginViewModel {
     }
     public void SignIn(String pw, Activity activity){
         Log.d(Constants.TAG_LoginVM,"Signin kaldt"+pw);
-        repository.SignIn(pw, activity);
+        repository.SignIn(pw);
     }
 
     public void SignOut() {

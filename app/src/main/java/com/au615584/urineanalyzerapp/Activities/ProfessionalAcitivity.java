@@ -14,11 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.au615584.urineanalyzerapp.Activities.PatientActivity;
 import com.au615584.urineanalyzerapp.Adapters.AnalysisTypeAdapter;
 import com.au615584.urineanalyzerapp.Adapters.LanguageAdapter;
-import com.au615584.urineanalyzerapp.AnalysisType;
-import com.au615584.urineanalyzerapp.Language;
+import com.au615584.urineanalyzerapp.Model.AnalysisType;
+import com.au615584.urineanalyzerapp.Model.Language;
 import com.au615584.urineanalyzerapp.R;
 import com.au615584.urineanalyzerapp.ViewModels.ProfessionalViewModel;
 
@@ -114,10 +113,10 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
 
     @Override
     public void onAnalysisItemClicked(int index) {
-        AnalysisChosen(types.get(index));
+        setAnalysisType(types.get(index));
     }
 
-    private void AnalysisChosen(AnalysisType analysisType) {
+    private void setAnalysisType(AnalysisType analysisType) {
         //create a dialogue popup - and show it
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("You clicked on " + analysisType.name + "\nWell done!")
@@ -127,7 +126,7 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
 
     @Override
     public void ChooseAnalysisType(AnalysisType analysisType) {
-        AnalysisChosen(analysisType);
+        setAnalysisType(analysisType);
     }
 
 

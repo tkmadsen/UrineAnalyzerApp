@@ -1,10 +1,8 @@
 package com.au615584.urineanalyzerapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,17 +19,20 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Locale;
 
-public class Repository {
+public class Repository implements IRepository{
     //Instance for Singleton pattern
     private static Repository instance;
-    private MutableLiveData<Boolean> isUserSignedIn;
-    FirebaseFirestore db;
+    public MutableLiveData<Boolean> isUserSignedIn;
+    public boolean testBool;
+    IFirebaseConnection fireBaseCon;
     private DocumentReference patientResultsRef;
     private BluetoothCommunication btConnection;
     private MutableLiveData<String> state;
 
-    private Repository() {
-        db = FirebaseFirestore.getInstance();
+    Repository(IFirebaseConnection fireBaseCon) {
+        this.fireBaseCon = fireBaseCon;
+        isUserSignedIn = new MutableLiveData<>(false);
+        testBool=new Boolean(false);
         btConnection = new BluetoothCommunication();
     }
 
@@ -39,15 +40,23 @@ public class Repository {
     public static Repository getInstance() {
 
         if (instance == null) {
-            instance = new Repository();
+            instance = new Repository(new FirebaseConnection());
         }
         return instance;
     }
 
-    public void SignIn(String pw, Activity activity) {
+    public int Test(String input){
+        if(input.equals("hej")){
+            return 2;
+        }
+        else{return 0;}
+    }
+
+    public void SignIn(String pw) {
         if (pw.equals("1234")) {
             Log.d(Constants.TAG_Rep, "User signed in");
             isUserSignedIn.postValue(true);
+            testBool=true;
 
         } else {
             Log.d(Constants.TAG_Rep, "1234 ikke rigtig" + pw + "hej");
@@ -78,23 +87,7 @@ public class Repository {
     }
 
     public void addPatientResult() {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
-        PatientResult patientResult = new PatientResult(1234567888, Timestamp.now(), "4+", "Negativ", "Emma", "Auh", "Aarhus Jordemoderpraksis");
-
-        //Writing to database
-        db.collection("Patient")
-                .add(patientResult)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference patientResultsRef) {
-                        Log.d("AddPatientResult, onSuccess", "DocumentSnapshot added with ID: " + patientResultsRef.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("AddPatientResult, onFailure", "Error adding document", e);
-                    }
-                });
+        fireBaseCon.addPatientResult();
     }
 
   public void connectToRemoteDevice() {

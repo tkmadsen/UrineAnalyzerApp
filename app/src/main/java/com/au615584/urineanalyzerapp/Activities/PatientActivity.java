@@ -109,7 +109,7 @@ public class PatientActivity extends AppCompatActivity {
                                 .commit();
                         break;
                     case "Guide":
-                        showDialouge();
+                        showDialogue();
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
                                 .commit();
@@ -163,7 +163,7 @@ public class PatientActivity extends AppCompatActivity {
             }
         });
     }
-    public void showDialouge(){
+    public void showDialogue(){
         //create a dialogue popup - and show it
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle(R.string.welcome).setMessage(R.string.CPRdialog);
         final AlertDialog alert = dialog.create();

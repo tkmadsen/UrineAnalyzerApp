@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.au615584.urineanalyzerapp.AnalysisType;
+import com.au615584.urineanalyzerapp.Model.AnalysisType;
 import com.au615584.urineanalyzerapp.R;
 
 import java.util.ArrayList;

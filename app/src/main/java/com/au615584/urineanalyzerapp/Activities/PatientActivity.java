@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
+import com.au615584.urineanalyzerapp.Fragments.ProcessingFragment;
 import com.au615584.urineanalyzerapp.Fragments.ResultFragment;
 import com.au615584.urineanalyzerapp.Fragments.WelcomeFragment;
 import com.au615584.urineanalyzerapp.R;
@@ -75,6 +76,7 @@ public class PatientActivity extends AppCompatActivity {
         Fragment guideFragment=new GuideFragment();
         Fragment welcomeFragment=new WelcomeFragment();
         Fragment resultFragment=new ResultFragment();
+        Fragment processingFragment=new ProcessingFragment();
 
         //Apply default fragment
         getSupportFragmentManager().beginTransaction()
@@ -101,6 +103,7 @@ public class PatientActivity extends AppCompatActivity {
                 // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
                 switch(state) {
                     case "Result":
+                        Log.d("PatientActivity", "ChangeState(), Received 1");
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")
                                 .commit();
@@ -114,6 +117,11 @@ public class PatientActivity extends AppCompatActivity {
                     case "Welcome":
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,welcomeFragment,"WELCOME_FRAGMENT")
+                                .commit();
+                        break;
+                    case "Analyzing":
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,processingFragment, "PROCESSING_FRAGMENT")
                                 .commit();
                         break;
                 }

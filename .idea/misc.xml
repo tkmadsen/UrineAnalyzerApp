@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/emma1/Desktop/Opgaver/Bachelor/UrinAnalyzerApp/app/src/main/res/drawable/circular_progress_bar.xml" value="0.1205" />
+        <entry key="..\:/Users/emma1/Desktop/Opgaver/Bachelor/UrinAnalyzerApp/app/src/main/res/layout/fragment_guide.xml" value="0.109375" />
+        <entry key="..\:/Users/emma1/Desktop/Opgaver/Bachelor/UrinAnalyzerApp/app/src/main/res/layout/fragment_processing.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/trine/AndroidStudioProjects/BAC2022/app/src/main/res/layout/activity_login.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/trine/AndroidStudioProjects/BAC2022/app/src/main/res/layout/activity_patient.xml" value="0.1" />
         <entry key="..\:/Users/trine/AndroidStudioProjects/BAC2022/app/src/main/res/layout/activity_professional.xml" value="0.16799999999999998" />

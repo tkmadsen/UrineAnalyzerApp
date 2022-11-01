@@ -20,4 +20,5 @@
     <string name="guide2Txt">3. Dub stix med papir</string>
     <string name="guide3Txt">4. Placer urinstix i åbningen til højre for skærmen \n5. Tryk på knap indtil stixen fastholdes af systemet</string>
     <string name="correctTestTXt">Resultat modtaget</string>
+    <string name="ProgressTxt">Analyserer</string>
 </resources>

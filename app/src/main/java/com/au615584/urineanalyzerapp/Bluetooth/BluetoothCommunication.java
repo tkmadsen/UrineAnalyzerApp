@@ -25,7 +25,6 @@ import java.util.UUID;
 public class BluetoothCommunication {
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
-  BluetoothSocket socket;
   private Set<BluetoothDevice> pairedDevices;
   private String readMessage = null;
   public MutableLiveData<String> state;
@@ -74,19 +73,28 @@ public class BluetoothCommunication {
   }
 
   public void changeState(String btMessage) {
-    int rpiProtocol = btMessage.charAt(0);
+    Log.d("BTConnection", "Reached changeState()");
+    Character rpiProtocol = btMessage.charAt(0);
+    Log.d("BTConnection", "int for RpiProtocol: " + String.valueOf(rpiProtocol));
     switch(rpiProtocol) {
-      case 1:
+      case '1':
         state.postValue("Guide");
+        Log.d("BTConnection", "ChangeState(), Received 1");
         break;
-      case 2:
-        state.postValue("Guide"); //TODO evt lav en processing fragment
+      case '2':
+        state.postValue("Guide");
+        Log.d("BTConnection", "ChangeState(), Received 2");
         break;
-      case 3:
+      case '3':
+        state.postValue("Analyzing");
+        Log.d("BTConnection", "ChangeState(), Received 3");
+      case '4':
         state.postValue("Result");
+        Log.d("BTConnection", "ChangeState(), Received 4");
         break;
       default:
         state.postValue("Welcome");
+        Log.d("BTConnection", "ChangeState(), default");
         break;
     }
   }
@@ -100,9 +108,17 @@ public class BluetoothCommunication {
 
   public class ConnectThread1 extends Thread {
 
+    private final BluetoothSocket socket;
+    private final InputStream mmInputStream;
+    private final OutputStream mmOutputStream;
+
+
     @SuppressLint("MissingPermission")
     private ConnectThread1(BluetoothDevice device) throws IOException {
       BluetoothSocket tmp = null;
+      InputStream tmpIn = null;
+      OutputStream tmpOut = null;
+
       btDevice = device;
 
       try {
@@ -122,8 +138,37 @@ public class BluetoothCommunication {
       } catch (IOException connectException) {
         Log.e("BTConnection", "Socket's connect method failed", connectException);
       }
-      //write();
-      readMessage();
+
+
+      try {
+        tmpIn = socket.getInputStream();
+        tmpOut = socket.getOutputStream();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+      mmInputStream = tmpIn;
+      mmOutputStream = tmpOut;
+    }
+
+    public void run(){
+      byte[] buffer = new byte[1024];  // buffer store for the stream
+
+      int bytes; // bytes returned from read()
+
+      // Keep listening to the InputStream until an exception occurs
+      while (true) {
+        // Read from the InputStream
+        try {
+          bytes = mmInputStream.read(buffer);
+          String incomingMessage = new String(buffer, 0, bytes);
+          Log.d("BTConnection", "InputStream: " + incomingMessage);
+          changeState(incomingMessage);
+        } catch (IOException e) {
+          Log.e("BTConnection", "write: Error reading Input Stream. " + e.getMessage() );
+          break;
+        }
+      }
     }
 
     public void write() throws IOException {

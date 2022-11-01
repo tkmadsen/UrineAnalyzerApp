@@ -39,7 +39,7 @@ public class LoginViewModelTest {
     public void setUp() throws Exception {
         mockFirebase=mock(FirebaseConnection.class);
         mockRepository= mock(IRepository.class);
-        loginViewModel=new LoginViewModel();
+        loginViewModel=new LoginViewModel(mockFirebase);
         mockObserver = mock(Observer.class);
     }
 

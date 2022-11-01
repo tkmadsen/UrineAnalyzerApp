@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.au615584.urineanalyzerapp.FirebaseConnection;
 import com.au615584.urineanalyzerapp.FragmentState;
 import com.au615584.urineanalyzerapp.Repository;
 
@@ -12,7 +13,7 @@ public class PatientViewModel {
   Repository repository;
 
   public PatientViewModel() {
-    repository = Repository.getInstance();
+    repository = Repository.getInstance(new FirebaseConnection());
   }
 
   public void connectToRemoteDevice(){

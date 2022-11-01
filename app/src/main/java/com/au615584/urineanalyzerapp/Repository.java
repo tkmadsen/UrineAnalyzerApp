@@ -37,10 +37,10 @@ public class Repository implements IRepository{
     }
 
     //Singleton patten
-    public static Repository getInstance() {
+    public static Repository getInstance(IFirebaseConnection connection) {
 
         if (instance == null) {
-            instance = new Repository(new FirebaseConnection());
+            instance = new Repository(connection);
         }
         return instance;
     }

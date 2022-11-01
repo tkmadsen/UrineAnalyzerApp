@@ -15,7 +15,7 @@ public class FirebaseConnection implements IFirebaseConnection{
     FirebaseFirestore db;
     private DocumentReference patientResultsRef;
 
-    FirebaseConnection() {
+    public FirebaseConnection() {
         db = FirebaseFirestore.getInstance();
     }
     public void addPatientResult() {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {

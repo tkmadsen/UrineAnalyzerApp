@@ -28,8 +28,8 @@ public class LoginActivityTest{
     private Intent intent;
     //private LoginActivity activity;
 
-    @Mock
-    private Context context;
+    //@Mock
+    //private Context context;
 
     public LoginActivityTest() {
         //activity=new LoginActivity();'

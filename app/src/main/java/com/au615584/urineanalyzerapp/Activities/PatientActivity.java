@@ -103,23 +103,26 @@ public class PatientActivity extends AppCompatActivity {
                 // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
                 switch(state) {
                     case "Result":
-                        Log.d("PatientActivity", "ChangeState(), Received 1");
+                        Log.d("PatientActivity", "ChangeState(), Received Result");
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")
                                 .commit();
                         break;
                     case "Guide":
+                        Log.d("PatientActivity", "ChangeState(), Received Guide");
                         showDialogue();
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
                                 .commit();
                         break;
                     case "Welcome":
+                        Log.d("PatientActivity", "ChangeState(), Received welcome");
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,welcomeFragment,"WELCOME_FRAGMENT")
                                 .commit();
                         break;
                     case "Analyzing":
+                        Log.d("PatientActivity", "ChangeState(), Received analyzing");
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,processingFragment, "PROCESSING_FRAGMENT")
                                 .commit();

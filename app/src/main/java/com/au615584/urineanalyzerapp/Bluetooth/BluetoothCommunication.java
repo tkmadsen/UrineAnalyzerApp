@@ -53,7 +53,7 @@ public class BluetoothCommunication {
       Toast.makeText(UrineAnalyzerApplication.getAppContext(), "No paired devices found", Toast.LENGTH_SHORT).show();
     } else {
       for (BluetoothDevice btDevice : pairedDevices) {
-        if (btDevice.getAddress().equals("B8:27:EB:43:01:2A")) {
+        if (btDevice.getAddress().equals("B8:27:EB:C5:3C:8F")) {
           address = btDevice.getAddress();
         }
       }
@@ -75,27 +75,29 @@ public class BluetoothCommunication {
   public void changeState(String btMessage) {
     Log.d("BTConnection", "Reached changeState()");
     Character rpiProtocol = btMessage.charAt(0);
-    Log.d("BTConnection", "int for RpiProtocol: " + String.valueOf(rpiProtocol));
+    Log.d("BTConnection", "btMessage: " + btMessage);
+    Log.d("BTConnection", "int for RpiProtocol: " + rpiProtocol);
     switch(rpiProtocol) {
       case '1':
         state.postValue("Guide");
         Log.d("BTConnection", "ChangeState(), Received 1");
         break;
       case '2':
-        state.postValue("Guide");
+        state.postValue("Analyzing");
         Log.d("BTConnection", "ChangeState(), Received 2");
         break;
       case '3':
-        state.postValue("Analyzing");
-        Log.d("BTConnection", "ChangeState(), Received 3");
-      case '4':
         state.postValue("Result");
-        Log.d("BTConnection", "ChangeState(), Received 4");
+        Log.d("BTConnection", "ChangeState(), Received 3");
+        break;
+      case '4':
+        state.postValue("Welcome");
+        Log.d("BTConnection", "ChangeState(), Received 5");
         break;
       default:
         state.postValue("Welcome");
         Log.d("BTConnection", "ChangeState(), default");
-        break;
+
     }
   }
 

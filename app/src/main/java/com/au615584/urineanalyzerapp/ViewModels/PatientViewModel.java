@@ -7,13 +7,19 @@ import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.FirebaseConnection;
 import com.au615584.urineanalyzerapp.FragmentState;
+import com.au615584.urineanalyzerapp.IFirebaseConnection;
+import com.au615584.urineanalyzerapp.IRepository;
 import com.au615584.urineanalyzerapp.Repository;
 
 public class PatientViewModel {
-  Repository repository;
+  IRepository repository;
 
   public PatientViewModel() {
     repository = Repository.getInstance(new FirebaseConnection());
+  }
+
+  public PatientViewModel(IRepository repo, IFirebaseConnection connection) {
+    repository=repo;
   }
 
   public void connectToRemoteDevice(){
@@ -27,4 +33,5 @@ public class PatientViewModel {
   public LiveData<String> state() {
     return repository.state();
   }
+  public LiveData<String> cpr(){return repository.cpr();}
 }

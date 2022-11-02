@@ -90,15 +90,17 @@ public class Repository implements IRepository{
         fireBaseCon.addPatientResult();
     }
 
-  public void connectToRemoteDevice() {
+    public void connectToRemoteDevice() {
         btConnection.connectToRemoteDevice();
   }
 
-  public boolean isBluetoothEnabled() {
+    public boolean isBluetoothEnabled() {
         return btConnection.isBluetoothEnabled();
   }
 
-  public LiveData<String> state() {
+    public LiveData<String> state() {
         return btConnection.fragmentState();
   }
+
+    public LiveData<String> cpr() { return btConnection.cprString();}
 }

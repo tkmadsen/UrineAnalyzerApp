@@ -8,17 +8,18 @@ import androidx.lifecycle.LiveData;
 import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.FirebaseConnection;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
+import com.au615584.urineanalyzerapp.IRepository;
 import com.au615584.urineanalyzerapp.Repository;
 
 public class LoginViewModel {
-    private Repository repository;
+    private IRepository repository;
 
     public LoginViewModel() {
         repository = Repository.getInstance(new FirebaseConnection());
     }
 
-    public LoginViewModel(IFirebaseConnection connection) {
-        repository = Repository.getInstance(connection);
+    public LoginViewModel(IRepository repo,IFirebaseConnection connection) {
+        repository=repo;
     }
 
     public LiveData<Boolean> isSignedIn() {

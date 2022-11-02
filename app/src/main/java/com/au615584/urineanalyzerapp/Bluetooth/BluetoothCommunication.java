@@ -28,9 +28,13 @@ public class BluetoothCommunication {
   private Set<BluetoothDevice> pairedDevices;
   private String readMessage = null;
   public MutableLiveData<String> state;
+  public MutableLiveData<String> cpr;
+  private MutableLiveData<String> result;
 
   public BluetoothCommunication() {
     state = new MutableLiveData<>("Welcome");
+    cpr= new MutableLiveData<>("CPRdefault");
+    result= new MutableLiveData<>("resultDefault");
   }
 
   public boolean isBluetoothEnabled() {
@@ -164,6 +168,7 @@ public class BluetoothCommunication {
           String incomingMessage = new String(buffer, 0, bytes);
           Log.d("BTConnection", "InputStream: " + incomingMessage);
           changeState(incomingMessage);
+          saveIncoming(incomingMessage);
         } catch (IOException e) {
           Log.e("BTConnection", "write: Error reading Input Stream. " + e.getMessage() );
           break;
@@ -202,5 +207,31 @@ public class BluetoothCommunication {
 
       return readMessage;
     }
+  }
+
+  private void saveIncoming(String incomingMessage) {
+    if(incomingMessage.charAt(0)==1){
+      cpr.postValue(incomingMessage.substring(1));
+      Log.d("BTConnection", "saveCPR: "+cpr);
+    }
+    /*
+    else if (incomingMessage.charAt(0)==X){
+      result.postValue(incomingMessage.substring(1));
+      Log.d("BTConnection", "saveCPR: "+result);
+    }
+     */
+  }
+
+  public LiveData<String> cprString() {
+    if(cpr == null) {
+      cpr = new MutableLiveData<>();
+    }
+    return cpr;
+  }
+  public LiveData<String> resultString() {
+    if(result == null) {
+      result = new MutableLiveData<>();
+    }
+    return result;
   }
 }

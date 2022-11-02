@@ -33,6 +33,7 @@ import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 public class PatientActivity extends AppCompatActivity {
 
     private Button btnTest;
+    private String CPR="Default";
     private ImageButton btnPro;
     private ActivityResultLauncher<Intent> signInLauncher;
     private ActivityResultLauncher<Intent> bluetoothEnableLauncher;
@@ -96,6 +97,13 @@ public class PatientActivity extends AppCompatActivity {
                 }
             });
         }
+
+        vm.cpr().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                CPR=s;
+            }
+        });
 
         vm.state().observe(this, new Observer<String>() {
             @Override
@@ -165,7 +173,7 @@ public class PatientActivity extends AppCompatActivity {
     }
     public void showDialogue(){
         //create a dialogue popup - and show it
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle(R.string.welcome).setMessage(R.string.CPRdialog);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle(R.string.welcome).setMessage(CPR);
         final AlertDialog alert = dialog.create();
         alert.show();
 

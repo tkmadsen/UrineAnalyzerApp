@@ -105,6 +105,14 @@ public class PatientActivity extends AppCompatActivity {
             }
         });
 
+        vm.result().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                CPR=s;
+            }
+        });
+
+
         vm.state().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String state) {

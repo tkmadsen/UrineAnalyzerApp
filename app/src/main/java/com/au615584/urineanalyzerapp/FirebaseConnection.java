@@ -11,6 +11,8 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
+
 public class FirebaseConnection implements IFirebaseConnection{
     FirebaseFirestore db;
     private DocumentReference patientResultsRef;
@@ -18,8 +20,12 @@ public class FirebaseConnection implements IFirebaseConnection{
     public FirebaseConnection() {
         db = FirebaseFirestore.getInstance();
     }
-    public void addPatientResult() {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
-        PatientResult patientResult = new PatientResult(1234567888, Timestamp.now(), "4+", "Negativ", "Emma", "Auh", "Aarhus Jordemoderpraksis");
+    public void addPatientResult(String cprNo, String result) {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
+      int cpr = Integer.parseInt(cprNo);
+      String[] results = result.split(",");
+      results[0] = results[0].substring(6);
+      results[1] = results[1].substring(6);
+      PatientResult patientResult = new PatientResult(cpr, Timestamp.now(), results[0], results[1], "Emma", "Auh", "Aarhus Jordemoderpraksis");
 
         //Writing to database
         db.collection("Patient")
@@ -37,4 +43,5 @@ public class FirebaseConnection implements IFirebaseConnection{
                     }
                 });
     }
+
 }

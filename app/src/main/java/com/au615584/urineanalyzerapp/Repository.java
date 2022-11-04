@@ -86,8 +86,8 @@ public class Repository implements IRepository{
         isUserSignedIn.postValue(false);
     }
 
-    public void addPatientResult() {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
-        fireBaseCon.addPatientResult();
+    public void addPatientResult(String cpr, String result) {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
+        fireBaseCon.addPatientResult(cpr, result);
     }
 
     public void connectToRemoteDevice() {
@@ -103,4 +103,8 @@ public class Repository implements IRepository{
   }
 
     public LiveData<String> cpr() { return btConnection.cprString();}
+    public LiveData<String> result() {
+        addPatientResult(cpr().getValue(), result().getValue());
+        return btConnection.resultString();
+    }
 }

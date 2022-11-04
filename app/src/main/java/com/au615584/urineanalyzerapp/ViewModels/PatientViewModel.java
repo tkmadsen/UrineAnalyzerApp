@@ -34,4 +34,5 @@ public class PatientViewModel {
     return repository.state();
   }
   public LiveData<String> cpr(){return repository.cpr();}
+  public LiveData<String> result(){return repository.result();}
 }

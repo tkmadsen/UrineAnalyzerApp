@@ -215,6 +215,9 @@ public class BluetoothCommunication {
     if(incomingMessage.charAt(0)=='1'){
       cpr.postValue(incomingMessage.substring(1));
       Log.d("BTConnection", "saveCPR: "+cpr);
+    } else if (incomingMessage.charAt(0) == '3'){
+      result.postValue(incomingMessage.substring(1));
+      Log.d("BTConnection", "saveResult: " + result );
     }
     /*
     else if (incomingMessage.charAt(0)==X){

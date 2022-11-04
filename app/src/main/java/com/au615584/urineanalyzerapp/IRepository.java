@@ -22,4 +22,6 @@ public interface IRepository {
     void SetLocal(Activity activity, String langCode);
 
     LiveData<String> cpr();
+
+    LiveData<String> result();
 }

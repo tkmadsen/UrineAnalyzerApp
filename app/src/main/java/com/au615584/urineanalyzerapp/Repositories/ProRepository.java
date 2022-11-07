@@ -74,7 +74,7 @@ public class ProRepository implements IProRepository{
         isUserSignedIn.postValue(false);
     }
 
-    public void addPatientResult(String cpr, String result) {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
-        fireBaseCon.addPatientResult(cpr, result);
+    public void addPatientResult(String cprtest, String result) {//Integer cpr, String glucose, String protein, String clinician, String hospital, String practice) {
+        fireBaseCon.addPatientResult(cprtest, result);
     }
 }

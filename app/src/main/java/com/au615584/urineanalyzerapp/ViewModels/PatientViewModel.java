@@ -1,38 +1,35 @@
 package com.au615584.urineanalyzerapp.ViewModels;
 
-import android.app.Activity;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
+import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.FirebaseConnection;
-import com.au615584.urineanalyzerapp.FragmentState;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
-import com.au615584.urineanalyzerapp.IRepository;
-import com.au615584.urineanalyzerapp.Repository;
+import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 
 public class PatientViewModel {
-  IRepository repository;
+  Controller controller;
 
   public PatientViewModel() {
-    repository = Repository.getInstance(new FirebaseConnection());
+    controller = Controller.getInstance();
   }
 
-  public PatientViewModel(IRepository repo, IFirebaseConnection connection) {
-    repository=repo;
+  public PatientViewModel(Controller control) {
+    controller=control;
   }
 
   public void connectToRemoteDevice(){
-    repository.connectToRemoteDevice();
+    controller.connectToRemoteDevice();
   }
 
   public boolean isBluetoothEnabled() {
-    return repository.isBluetoothEnabled();
+    return controller.isBluetoothEnabled();
   }
 
   public LiveData<String> state() {
-    return repository.state();
+    return controller.state();
   }
-  public LiveData<String> cpr(){return repository.cpr();}
-  public LiveData<String> result(){return repository.result();}
+  public LiveData<String> cpr(){return controller.cpr();}
+  public LiveData<String> result(){return controller.result();}
 }

@@ -2,23 +2,25 @@ package com.au615584.urineanalyzerapp.ViewModels;
 
 import android.app.Activity;
 
+import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.FirebaseConnection;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
-import com.au615584.urineanalyzerapp.IRepository;
-import com.au615584.urineanalyzerapp.Repository;
+import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
+import com.au615584.urineanalyzerapp.Repositories.IProRepository;
 
 public class ProfessionalViewModel {
-    IRepository repository;
+    Controller controller;
 
     public ProfessionalViewModel() {
-        repository = Repository.getInstance(new FirebaseConnection());
+        controller = Controller.getInstance();
     }
-    public ProfessionalViewModel(IRepository repo, IFirebaseConnection connection) {
-        repository=repo;
+    public ProfessionalViewModel(Controller control) {
+        controller=control;
     }
 
     public void SetLocal(Activity activity, String langCode){
-        repository.SetLocal(activity,langCode);
+        controller.setLocal(activity,langCode);
         //For test
         //repository.addPatientResult();
     }

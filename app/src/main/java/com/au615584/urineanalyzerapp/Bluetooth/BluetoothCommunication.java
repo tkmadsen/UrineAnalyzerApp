@@ -219,12 +219,6 @@ public class BluetoothCommunication {
       result.postValue(incomingMessage.substring(1));
       Log.d("BTConnection", "saveResult: " + result );
     }
-    /*
-    else if (incomingMessage.charAt(0)==X){
-      result.postValue(incomingMessage.substring(1));
-      Log.d("BTConnection", "saveCPR: "+result);
-    }
-     */
   }
 
   public LiveData<String> cprString() {

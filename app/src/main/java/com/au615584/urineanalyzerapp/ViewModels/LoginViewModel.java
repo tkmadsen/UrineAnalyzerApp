@@ -6,31 +6,34 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Constants;
+import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.FirebaseConnection;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
-import com.au615584.urineanalyzerapp.IRepository;
-import com.au615584.urineanalyzerapp.Repository;
+import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
+import com.au615584.urineanalyzerapp.Repositories.IProRepository;
+import com.au615584.urineanalyzerapp.Repositories.ProRepository;
 
 public class LoginViewModel {
-    private IRepository repository;
+    private Controller controller;
 
     public LoginViewModel() {
-        repository = Repository.getInstance(new FirebaseConnection());
+        controller = Controller.getInstance();
     }
 
-    public LoginViewModel(IRepository repo,IFirebaseConnection connection) {
-        repository=repo;
+    public LoginViewModel(Controller control) {
+        controller=control;
     }
 
     public LiveData<Boolean> isSignedIn() {
-        return repository.isSignedIn();
+        return controller.isSignedIn();
     }
     public void SignIn(String pw, Activity activity){
         Log.d(Constants.TAG_LoginVM,"Signin kaldt"+pw);
-        repository.SignIn(pw);
+        controller.signIn(pw);
     }
 
     public void SignOut() {
-        repository.SignOut();
+        controller.signOut();
     }
 }

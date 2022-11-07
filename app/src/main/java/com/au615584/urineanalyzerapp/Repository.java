@@ -104,7 +104,7 @@ public class Repository implements IRepository{
 
     public LiveData<String> cpr() { return btConnection.cprString();}
     public LiveData<String> result() {
-        addPatientResult(cpr().getValue(), result().getValue());
+        //addPatientResult(cpr().getValue(), result().getValue());
         return btConnection.resultString();
     }
 }

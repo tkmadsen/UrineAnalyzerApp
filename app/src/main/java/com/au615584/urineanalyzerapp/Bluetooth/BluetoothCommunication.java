@@ -70,7 +70,7 @@ public class BluetoothCommunication {
     String deviceAddress = findDeviceAddress();
     final BluetoothDevice device = btAdapter.getRemoteDevice(deviceAddress);
     try {
-      new ConnectThread1(device).start();
+      new ConnectThread(device).start();
     } catch (IOException e) {
       Log.e("BTConnection", "Fail in starting connectThread", e);
     }
@@ -112,7 +112,7 @@ public class BluetoothCommunication {
     return state;
   }
 
-  public class ConnectThread1 extends Thread {
+  public class ConnectThread extends Thread {
 
     private final BluetoothSocket socket;
     private final InputStream mmInputStream;
@@ -120,7 +120,7 @@ public class BluetoothCommunication {
 
 
     @SuppressLint("MissingPermission")
-    private ConnectThread1(BluetoothDevice device) throws IOException {
+    private ConnectThread(BluetoothDevice device) throws IOException {
       BluetoothSocket tmp = null;
       InputStream tmpIn = null;
       OutputStream tmpOut = null;
@@ -178,8 +178,7 @@ public class BluetoothCommunication {
       }
     }
 
-    public void write() throws IOException {
-      String msg = "Hej bac";
+    public void write(String msg) throws IOException {
       OutputStream outputStream = socket.getOutputStream();
       outputStream.write(msg.getBytes());
     }

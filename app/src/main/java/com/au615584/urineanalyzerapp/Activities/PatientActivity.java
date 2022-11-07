@@ -5,7 +5,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import android.app.Activity;
@@ -20,14 +19,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
 import com.au615584.urineanalyzerapp.Fragments.ProcessingFragment;
 import com.au615584.urineanalyzerapp.Fragments.ResultFragment;
 import com.au615584.urineanalyzerapp.Fragments.WelcomeFragment;
 import com.au615584.urineanalyzerapp.R;
-import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
 import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 
 public class PatientActivity extends AppCompatActivity {

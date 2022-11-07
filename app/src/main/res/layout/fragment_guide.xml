@@ -85,7 +85,8 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            tools:srcCompat="@drawable/devicev2" />
 
         <TextView
             android:id="@+id/guide3Txt"

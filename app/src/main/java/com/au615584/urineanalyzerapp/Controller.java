@@ -9,7 +9,7 @@ import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
-import com.au615584.urineanalyzerapp.Repositories.ProRepository;
+import com.au615584.urineanalyzerapp.Repositories.pRepository;
 
 
 public class Controller {
@@ -31,7 +31,7 @@ public class Controller {
     public Controller() {
         btRepository = BTRepository.getInstance(new FirebaseConnection());
         EPJrepository = EPJRepository.getInstance(new FirebaseConnection());
-        proRepository = ProRepository.getInstance(new FirebaseConnection());
+        proRepository = pRepository.getInstance(new FirebaseConnection());
     }
 
     //ForEPJRepository
@@ -41,7 +41,7 @@ public class Controller {
     public void signIn(String pw){proRepository.SignIn(pw);}
     public void signOut(){proRepository.SignOut();}
     public void setLocal(Activity act, String langCode){proRepository.SetLocal(act,langCode);}
-    public void setStixTyoe(Activity act, String type){proRepository.setStixType(act, type);}
+    public void setStixType(Activity act, String type){proRepository.setStixType(act, type);}
     public LiveData<Boolean> isSignedIn() {
         return proRepository.isSignedIn();
     }

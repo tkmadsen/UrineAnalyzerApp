@@ -6,7 +6,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Velkommen!</string>
     <string name="scan">Scan venligst dit sundhedskort</string>
-    <string name="guide">1. Opsaml midtstråleurin \n2. Placer stix i urin (in x secs maybe?)</string>
+    <string name="guide">1. Opsaml midtstråleurin \n2. Dyp stix i urin</string>
     <string name="lanBtn">Skift sprog</string>
     <string name="btnChooseLan">Vælg</string>
     <string name="txtSetAnalysis">Sæt analysetype</string>
@@ -18,7 +18,7 @@
     <string name="errorInvalidPassword">Forkert kode</string>
     <string name="errorUserSignIn">Login fejlede</string>
     <string name="guide2Txt">3. Dub stix med papir</string>
-    <string name="guide3Txt">4. Placer urinstix i åbningen til venstre på apparatet og afvent, at stixen fastholdes af systemet</string>
+    <string name="guide3Txt">4. Placer urinstix i åbningen til højre på toppen af apparatet og afvent, at stixen fastholdes af systemet</string>
     <string name="correctTestTXt">Resultat modtaget</string>
     <string name="ProgressTxt">Analyserer</string>
 </resources>

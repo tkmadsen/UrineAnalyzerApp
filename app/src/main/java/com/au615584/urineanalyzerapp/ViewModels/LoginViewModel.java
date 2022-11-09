@@ -12,7 +12,7 @@ import com.au615584.urineanalyzerapp.IFirebaseConnection;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
-import com.au615584.urineanalyzerapp.Repositories.ProRepository;
+import com.au615584.urineanalyzerapp.Repositories.pRepository;
 
 public class LoginViewModel {
     private Controller controller;

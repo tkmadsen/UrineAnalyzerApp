@@ -67,13 +67,13 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToPatinet();
+                goToPatient();
             }
         });
 
     }
 
-    public void goToPatinet(){
+    public void goToPatient(){
         Intent intent = new Intent(this, PatientActivity.class);
         patientLauncher.launch(intent);
     }

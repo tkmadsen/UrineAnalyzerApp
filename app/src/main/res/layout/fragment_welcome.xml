@@ -38,21 +38,15 @@
 
         <ImageView
             android:id="@+id/imgScan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="668dp"
+            android:layout_height="525dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/sundhedskort"
-            app:layout_constraintStart_toStartOf="@+id/scanTB"
+            android:src="@drawable/nytscanningsbillede"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scanTB" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="243dp"
-            android:layout_height="205dp"
-            android:src="@drawable/jj"
-            app:layout_constraintEnd_toEndOf="@+id/scanTB"
-            app:layout_constraintStart_toEndOf="@+id/imgScan"
-            app:layout_constraintTop_toTopOf="@+id/imgScan" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

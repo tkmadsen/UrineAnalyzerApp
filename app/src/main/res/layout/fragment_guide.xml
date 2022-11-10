@@ -15,11 +15,12 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:src="@drawable/urin"
+            android:layout_height="0dp"
+            android:src="@drawable/dypurin"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/guideTB"
@@ -37,11 +38,12 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:src="@drawable/urinpapir"
+            android:layout_height="0dp"
+            android:src="@drawable/dubstix"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintStart_toStartOf="@+id/guideline5" />
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"
@@ -62,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.55" />
+            app:layout_constraintGuide_percent="0.66" />
 
         <TextView
             android:id="@+id/guide2Txt"
@@ -80,14 +82,12 @@
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:src="@drawable/devicev2"
+            android:layout_height="0dp"
+            android:src="@drawable/insertstix"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:srcCompat="@drawable/devicev2"
-            tools:srcCompat="@drawable/devicev2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/guide3Txt"

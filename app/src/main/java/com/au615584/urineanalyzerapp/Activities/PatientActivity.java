@@ -1,12 +1,5 @@
 package com.au615584.urineanalyzerapp.Activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
@@ -18,6 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
 import com.au615584.urineanalyzerapp.Fragments.ProcessingFragment;
@@ -101,18 +101,11 @@ public class PatientActivity extends AppCompatActivity {
             }
         });
 
-        vm.result().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                CPR=s;
-            }
-        });
 
 
         vm.state().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String state) {
-                // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
                 switch(state) {
                     case "Result":
                         Log.d("PatientActivity", "ChangeState(), Received Result");
@@ -122,6 +115,7 @@ public class PatientActivity extends AppCompatActivity {
                         break;
                     case "Guide":
                         Log.d("PatientActivity", "ChangeState(), Received Guide");
+                        Fragment guideFragment = new GuideFragment(CPR);
                         showDialogue();
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
@@ -146,7 +140,6 @@ public class PatientActivity extends AppCompatActivity {
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Open Result fragment: DENNE VIL SENERE SKULLE KALDES, NÅR BILLEDDATA MODTAGES
                 if (guideFragment != null && guideFragment.isVisible()) {
                     getSupportFragmentManager()
                             .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")

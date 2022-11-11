@@ -1,32 +1,29 @@
 package com.au615584.urineanalyzerapp.Fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.au615584.urineanalyzerapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GuideFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class GuideFragment extends Fragment {
-    private TextView txtGuide;
+    private TextView txtGuide, txtCpr;
     private ImageView imgGuide;
+    private String cpr;
 
     public GuideFragment() {
         // Required empty public constructor
     }
-
-    public static GuideFragment newInstance(String param1, String param2) {
-        return new GuideFragment();
+    public GuideFragment(String Cpr) {
+        cpr = Cpr;
     }
 
     @Override
@@ -42,7 +39,20 @@ public class GuideFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_guide, container, false);
         txtGuide = v.findViewById(R.id.guideTB);
         imgGuide = v.findViewById(R.id.imageView);
+        txtCpr = v.findViewById(R.id.cprTB);
+
+        Runnable delayedTask = new Runnable() {
+            @Override
+            public void run() {
+                txtCpr.setText("");
+            }
+        };
+        v.postDelayed(delayedTask, 3000);
 
         return  v;
+    }
+
+    public void removeCpr() {
+        txtCpr.setText("");
     }
 }

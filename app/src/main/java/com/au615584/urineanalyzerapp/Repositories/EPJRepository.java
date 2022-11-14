@@ -19,7 +19,9 @@ import com.au615584.urineanalyzerapp.Model.Observation.ValueCoding;
 import com.au615584.urineanalyzerapp.Model.Observation.ValueQuantity;
 import com.au615584.urineanalyzerapp.Model.Observation.ValueReference;
 import com.au615584.urineanalyzerapp.ObservationService;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +35,14 @@ public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
     private ObservationService obsService;
+    private static FileWriter fileWriter;
 
     EPJRepository() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
 
         /*Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("EPJ URL") //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
@@ -67,6 +71,14 @@ public class EPJRepository implements IEPJRepository {
         Observation obs = new Observation();
 
         obs.setResourceType("Observation");
+        Meta observationMeta = new Meta();
+        List<String> observationMetaProfileList = new ArrayList<>();
+        observationMetaProfileList.add("http://columnafhir.dk/p/ColumnaActivityResult");
+        observationMeta.setProfile(observationMetaProfileList);
+        obs.setMeta(observationMeta);
+
+
+
 
         List<Contained> contained = new ArrayList<>();
         //Creation contained location
@@ -204,7 +216,7 @@ public class EPJRepository implements IEPJRepository {
 
         //Adding subject to observation
         Subject subject = new Subject();
-        subject.setReference("Patient?identifier=http://cpr.dk/personregistret|0707076LK1&_profile=http://columnafhir.dk/p/ColumnaPatient");
+        subject.setReference("Patient?identifier=http://cpr.dk/personregistret|"+CPR+"&_profile=http://columnafhir.dk/p/ColumnaPatient");
 
         obs.setSubject(subject); //TODO find ud af hvordan cpr nummer skal tilføjes
 
@@ -335,8 +347,9 @@ public class EPJRepository implements IEPJRepository {
         return obs;
     }
 
-    public void saveToFile(double Glukose, double Albumin, String Cpr) {
+    public void saveToLog(double Glukose, double Albumin, String Cpr) {
         Observation obs = createObservation(Glukose, Albumin, Cpr);
+        Log.d("EPJRepository", new Gson().toJson(obs));
     }
 
     @Override

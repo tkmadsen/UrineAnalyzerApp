@@ -1,6 +1,6 @@
 package com.au615584.urineanalyzerapp;
 
-import com.au615584.urineanalyzerapp.Model.Observation;
+import com.au615584.urineanalyzerapp.Model.Observation.Observation;
 
 import java.util.Map;
 

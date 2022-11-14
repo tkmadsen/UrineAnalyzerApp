@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
 import com.au615584.urineanalyzerapp.Repositories.pRepository;
 
@@ -30,12 +29,12 @@ public class Controller {
 
     public Controller() {
         btRepository = BTRepository.getInstance(new FirebaseConnection());
-        EPJrepository = EPJRepository.getInstance(new FirebaseConnection());
+        //EPJrepository = EPJRepository.getInstance(new FirebaseConnection());
         proRepository = pRepository.getInstance(new FirebaseConnection());
     }
 
     //ForEPJRepository
-    public void saveToEPJ(){EPJrepository.saveToEPJ();}
+    //public void saveToEPJ(){EPJrepository.saveToEPJ();}
 
     //For proRepository
     public void signIn(String pw){proRepository.SignIn(pw);}

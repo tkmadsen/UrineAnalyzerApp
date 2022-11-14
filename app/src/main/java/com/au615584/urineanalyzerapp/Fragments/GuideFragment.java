@@ -40,6 +40,7 @@ public class GuideFragment extends Fragment {
         txtGuide = v.findViewById(R.id.guideTB);
         imgGuide = v.findViewById(R.id.imageView);
         txtCpr = v.findViewById(R.id.cprTB);
+        txtCpr.setText("Velkommen " + cpr);
 
         Runnable delayedTask = new Runnable() {
             @Override

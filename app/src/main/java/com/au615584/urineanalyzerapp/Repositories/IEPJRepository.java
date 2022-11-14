@@ -1,10 +1,6 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
-import android.app.Activity;
-
-import androidx.lifecycle.LiveData;
-
 public interface IEPJRepository {
 
-    void saveToEPJ();
+    void saveToEPJ(double Glukose, double Albumin, String Cpr);
 }

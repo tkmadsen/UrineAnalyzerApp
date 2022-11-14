@@ -48,9 +48,7 @@ public class Controller {
     //For btRepository
     public void connectToRemoteDevice(){btRepository.connectToRemoteDevice();}
     public boolean isBluetoothEnabled(){return btRepository.isBluetoothEnabled();}
-    public LiveData<String> state() {
-        return btRepository.state();
-    }
+    public LiveData<String> state() { return btRepository.state(); }
     public LiveData<String> cpr(){return btRepository.cpr();}
     public LiveData<String> result(){return btRepository.result();}
 

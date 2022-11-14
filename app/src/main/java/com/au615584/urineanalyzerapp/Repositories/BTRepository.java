@@ -1,7 +1,10 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
@@ -10,12 +13,14 @@ public class BTRepository implements IBTRepository {
     //Instance for Singleton pattern
     private static BTRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
+    public MutableLiveData<String> state;
     IFirebaseConnection fireBaseCon;
     private BluetoothCommunication btConnection;
 
     BTRepository(IFirebaseConnection fireBaseCon) {
         this.fireBaseCon = fireBaseCon;
         isUserSignedIn = new MutableLiveData<>(false);
+        state = new MutableLiveData<>("");
         btConnection = new BluetoothCommunication();
     }
 
@@ -36,6 +41,7 @@ public class BTRepository implements IBTRepository {
         return btConnection.isBluetoothEnabled();
     }
 
+    @Override
     public LiveData<String> state() {
         return btConnection.fragmentState();
     }

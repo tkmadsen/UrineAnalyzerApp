@@ -5,15 +5,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +22,7 @@ import java.util.UUID;
 public class BluetoothCommunication {
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
+  private State stateC;
   private Set<BluetoothDevice> pairedDevices;
   private String readMessage = null;
   public MutableLiveData<String> state;
@@ -32,6 +30,7 @@ public class BluetoothCommunication {
   private MutableLiveData<String> result;
 
   public BluetoothCommunication() {
+    stateC = new State();
     state = new MutableLiveData<>("Welcome");
     cpr= new MutableLiveData<>("CPRdefault");
     result= new MutableLiveData<>("resultDefault");
@@ -75,7 +74,7 @@ public class BluetoothCommunication {
       Log.e("BTConnection", "Fail in starting connectThread", e);
     }
   }
-
+/*
   public void changeState(String btMessage) {
     Log.d("BTConnection", "Reached changeState()");
     Character rpiProtocol = btMessage.charAt(0);
@@ -103,13 +102,14 @@ public class BluetoothCommunication {
         Log.d("BTConnection", "ChangeState(), default");
 
     }
+
+
   }
 
+ */
+
   public LiveData<String> fragmentState() {
-    if(state == null) {
-      state = new MutableLiveData<>();
-    }
-    return state;
+    return stateC.lState();
   }
 
   public class ConnectThread extends Thread {
@@ -170,7 +170,7 @@ public class BluetoothCommunication {
           String incomingMessage = new String(buffer, 0, bytes);
           Log.d("BTConnection", "InputStream: " + incomingMessage);
           saveIncoming(incomingMessage);
-          changeState(incomingMessage);
+          stateC.changeState(incomingMessage);
         } catch (IOException e) {
           Log.e("BTConnection", "write: Error reading Input Stream. " + e.getMessage() );
           break;
@@ -194,7 +194,7 @@ public class BluetoothCommunication {
           bytes = mmInputStream.read(buffer);
           readMessage1 = new String(buffer, 0, bytes);
           Log.d("BTConnection", "Received: " + readMessage1);
-          changeState(readMessage1);
+          stateC.changeState(readMessage1);
         } catch (IOException e) {
           Log.e("BTConnection", "Problems occurred!");
         }

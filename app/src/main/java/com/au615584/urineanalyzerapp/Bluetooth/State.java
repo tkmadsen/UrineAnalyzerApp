@@ -7,10 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 
 public class State {
     public MutableLiveData<String> state;
+    public IBluetoothConnection connection;
 
     public State() {
         state = new MutableLiveData<>("Welcome");
     }
+    public State(IBluetoothConnection btcon){connection=btcon;}
+
+
     public void changeState(String btMessage) {
         Log.d("BTConnection", "Reached changeState()");
         Character rpiProtocol = btMessage.charAt(0);

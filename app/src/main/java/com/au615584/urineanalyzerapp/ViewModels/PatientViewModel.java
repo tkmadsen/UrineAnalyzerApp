@@ -3,9 +3,10 @@ package com.au615584.urineanalyzerapp.ViewModels;
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Controller;
+import com.au615584.urineanalyzerapp.IController;
 
 public class PatientViewModel {
-  Controller controller;
+  IController controller;
 
   public PatientViewModel() {
     controller = Controller.getInstance();

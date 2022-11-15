@@ -3,9 +3,10 @@ package com.au615584.urineanalyzerapp.ViewModels;
 import android.app.Activity;
 
 import com.au615584.urineanalyzerapp.Controller;
+import com.au615584.urineanalyzerapp.IController;
 
 public class ProfessionalViewModel {
-    Controller controller;
+    IController controller;
 
     public ProfessionalViewModel() {
         controller = Controller.getInstance();

@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
-import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothCommunication;
+import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothConnection;
 
 public class BTRepository implements IBTRepository {
     //Instance for Singleton pattern
     private static BTRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
     public MutableLiveData<String> state;
-    private IBluetoothCommunication btConnection;
+    private IBluetoothConnection btConnection;
 
     BTRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
@@ -19,7 +19,7 @@ public class BTRepository implements IBTRepository {
         btConnection = new BluetoothConnection();
     }
 
-    BTRepository(IBluetoothCommunication btCon) {
+    BTRepository(IBluetoothConnection btCon) {
         btConnection=btCon;
     }
 

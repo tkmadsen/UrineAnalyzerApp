@@ -1,12 +1,14 @@
 package com.au615584.urineanalyzerapp.ViewModels;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
 import com.au615584.urineanalyzerapp.Activities.LoginActivity;
+import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 
 import org.junit.After;
@@ -22,7 +24,7 @@ public class LoginViewModelTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private IEPJRepository mockRepository;
+    private Controller mockController;
     private Observer<Boolean> mockObserver;
     private LoginViewModel loginViewModel;
     private LoginActivity act;
@@ -30,10 +32,9 @@ public class LoginViewModelTest {
 
     @Before
     public void setUp() throws Exception {
-        //mockFirebase=mock(FirebaseConnection.class);
-        //act=mock(LoginActivity.class);
-        //mockRepository= mock(EPJRepository.class);
-        //loginViewModel=new LoginViewModel(mockRepository,mockFirebase);
+        act=mock(LoginActivity.class);
+        mockController= mock(Controller.class);
+        loginViewModel=new LoginViewModel(mockController);
         //mockObserver = mock(Observer.class);
     }
 
@@ -43,14 +44,14 @@ public class LoginViewModelTest {
 
     @Test
     public void signIn() {
-        //loginViewModel.SignIn("1234", act);
-        //verify(mockRepository, times(1)).SignIn("1234");
+        loginViewModel.SignIn("1234", act);
+        verify(mockController, times(1)).signIn("1234");
     }
 
     @Test
     public void signOut() {
-        //loginViewModel.SignOut();
-        //verify(mockRepository, times(1)).SignOut();
+        loginViewModel.SignOut();
+        verify(mockController, times(1)).signOut();
     }
 
 

@@ -2,7 +2,7 @@ package com.au615584.urineanalyzerapp.Bluetooth;
 
 import androidx.lifecycle.LiveData;
 
-public interface IBluetoothCommunication {
+public interface IBluetoothConnection {
     void connectToRemoteDevice();
 
     boolean isBluetoothEnabled();
@@ -12,4 +12,6 @@ public interface IBluetoothCommunication {
     LiveData<String> cprString();
 
     LiveData<String> resultString();
+
+    LiveData<Boolean> isBtConnected();
 }

@@ -30,9 +30,9 @@ public class Controller {
     }
 
     public Controller() {
-        btRepository = BTRepository.getInstance(new FirebaseConnection());
+        btRepository = BTRepository.getInstance();
         EPJrepository = EPJRepository.getInstance();
-        proRepository = pRepository.getInstance(new FirebaseConnection());
+        proRepository = pRepository.getInstance();
     }
 
     //ForEPJRepository

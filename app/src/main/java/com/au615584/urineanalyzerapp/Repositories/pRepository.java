@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Constants;
-import com.au615584.urineanalyzerapp.IFirebaseConnection;
 
 import java.util.Locale;
 
@@ -18,20 +17,18 @@ public class pRepository implements IProRepository{
     //Instance for Singleton pattern
     private static pRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
-    IFirebaseConnection fireBaseCon;
     private BluetoothConnection btConnection;
 
-    pRepository(IFirebaseConnection fireBaseCon) {
-        this.fireBaseCon = fireBaseCon;
+    pRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
         btConnection = new BluetoothConnection();
     }
 
     //Singleton patten
-    public static pRepository getInstance(IFirebaseConnection connection) {
+    public static pRepository getInstance() {
 
         if (instance == null) {
-            instance = new pRepository(connection);
+            instance = new pRepository();
         }
         return instance;
     }

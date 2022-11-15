@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-public class BluetoothConnection {
+public class BluetoothConnection implements IBluetoothCommunication{
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
   private State stateC;

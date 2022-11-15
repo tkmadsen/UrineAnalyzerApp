@@ -9,12 +9,13 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 
 public interface ObservationService {
-    @POST("observations")
-    Call<Observation> createObservation(@Body Observation observation);
+    @POST("observations") //TODO tjek bearer
+    Call<Observation> createObservation(@Header("Bearer") String authToken, @Body Observation observation);
 
     @FormUrlEncoded
     @POST("observations")
@@ -23,5 +24,4 @@ public interface ObservationService {
     @FormUrlEncoded
     @POST("observations")
     Call<Observation> createObservation(@FieldMap Map<String, String> fields);
-
 }

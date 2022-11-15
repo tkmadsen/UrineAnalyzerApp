@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.IFirebaseConnection;
 
@@ -19,12 +19,12 @@ public class pRepository implements IProRepository{
     private static pRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
     IFirebaseConnection fireBaseCon;
-    private BluetoothCommunication btConnection;
+    private BluetoothConnection btConnection;
 
     pRepository(IFirebaseConnection fireBaseCon) {
         this.fireBaseCon = fireBaseCon;
         isUserSignedIn = new MutableLiveData<>(false);
-        btConnection = new BluetoothCommunication();
+        btConnection = new BluetoothConnection();
     }
 
     //Singleton patten

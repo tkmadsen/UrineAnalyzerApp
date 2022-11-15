@@ -23,6 +23,7 @@ import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
 import com.au615584.urineanalyzerapp.Fragments.ProcessingFragment;
 import com.au615584.urineanalyzerapp.Fragments.ResultFragment;
 import com.au615584.urineanalyzerapp.Fragments.WelcomeFragment;
+import com.au615584.urineanalyzerapp.Fragments.btFailFragment;
 import com.au615584.urineanalyzerapp.R;
 import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
@@ -75,10 +76,10 @@ public class PatientActivity extends AppCompatActivity {
         });
 
         //Initialize fragment
-        Fragment guideFragment=new GuideFragment();
         Fragment welcomeFragment=new WelcomeFragment();
         Fragment resultFragment=new ResultFragment();
         Fragment processingFragment=new ProcessingFragment();
+        Fragment btFailFragment = new btFailFragment();
 
         //Apply default fragment
         getSupportFragmentManager().beginTransaction()
@@ -107,6 +108,16 @@ public class PatientActivity extends AppCompatActivity {
         });
 
 
+        vm.isBtConnedted().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean == false) {
+                    getSupportFragmentManager().
+                            beginTransaction().replace(R.id.fraglist, btFailFragment, "BTFAIL_FRAGMENT")
+                            .commit();
+                }
+            }
+        });
 
         vm.state().observe(this, new Observer<String>() {
             @Override
@@ -170,7 +181,6 @@ public class PatientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(PatientActivity.this, LoginActivity.class);
-                //myIntent.putExtra("key", value); //Optional parameters
                 signInLauncher.launch(myIntent);
                 finish();
             }

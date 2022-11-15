@@ -1,10 +1,12 @@
 package com.au615584.urineanalyzerapp;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
@@ -29,7 +31,7 @@ public class Controller {
 
     public Controller() {
         btRepository = BTRepository.getInstance(new FirebaseConnection());
-        //EPJrepository = EPJRepository.getInstance(new FirebaseConnection());
+        EPJrepository = EPJRepository.getInstance();
         proRepository = pRepository.getInstance(new FirebaseConnection());
     }
 
@@ -50,7 +52,25 @@ public class Controller {
     public boolean isBluetoothEnabled(){return btRepository.isBluetoothEnabled();}
     public LiveData<String> state() { return btRepository.state(); }
     public LiveData<String> cpr(){return btRepository.cpr();}
-    public LiveData<String> result(){return btRepository.result();}
+    public LiveData<Boolean> isBtConnected(){ return btRepository.isBtConnected();}
+
+    public LiveData<String> result(){
+        sendResultToEPJ();
+        return btRepository.result();
+    }
+
+    //For EPJRepository
+    public void sendResultToEPJ(){
+        String result = btRepository.result().toString();
+        if(result.contains(",")) {
+            String[] resultList = result.split(",");
+            double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
+            double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
+            EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString());
+        } else {
+            Log.d("Controller", "Fail on test");
+        }
+    }
 
 
 }

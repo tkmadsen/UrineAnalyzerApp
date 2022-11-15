@@ -19,7 +19,8 @@
   <string name="correctTestTXt">Result received</string>
   <string name="backBtn">Back</string>
   <string name="CPRdialog">Welcome 2103971554</string>
-  <!-- TODO: Remove or change this placeholder text -->
   <string name="ProgressTxt">Analyzing</string>
-  <string name="cprTB" />
+  <string name="cprTB" translatable="false" />
+  <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+  <string name="btErrorTxt">An error has occurred. Please ask for help.</string>
 </resources>

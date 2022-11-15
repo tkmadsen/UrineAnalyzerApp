@@ -3,10 +3,6 @@ package com.au615584.urineanalyzerapp.ViewModels;
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Controller;
-import com.au615584.urineanalyzerapp.FirebaseConnection;
-import com.au615584.urineanalyzerapp.IFirebaseConnection;
-import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 
 public class PatientViewModel {
   Controller controller;

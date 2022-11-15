@@ -52,7 +52,6 @@ public class EPJRepository implements IEPJRepository {
     public ObservationService getObsService(){
         return obsService;
     }
-
     //Singleton patten
     public static EPJRepository getInstance() {
 

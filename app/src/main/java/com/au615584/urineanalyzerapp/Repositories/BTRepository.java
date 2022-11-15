@@ -1,34 +1,33 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
-import com.au615584.urineanalyzerapp.IFirebaseConnection;
+import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothCommunication;
 
 public class BTRepository implements IBTRepository {
     //Instance for Singleton pattern
     private static BTRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
     public MutableLiveData<String> state;
-    IFirebaseConnection fireBaseCon;
-    private BluetoothCommunication btConnection;
+    private IBluetoothCommunication btConnection;
 
-    BTRepository(IFirebaseConnection fireBaseCon) {
-        this.fireBaseCon = fireBaseCon;
+    BTRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
         state = new MutableLiveData<>("");
         btConnection = new BluetoothCommunication();
     }
 
+    BTRepository(IBluetoothCommunication btCon) {
+        btConnection=btCon;
+    }
+
     //Singleton patten
-    public static BTRepository getInstance(IFirebaseConnection connection) {
+    public static BTRepository getInstance() {
 
         if (instance == null) {
-            instance = new BTRepository(connection);
+            instance = new BTRepository();
         }
         return instance;
     }

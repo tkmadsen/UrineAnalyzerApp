@@ -1,22 +1,7 @@
 package com.au615584.urineanalyzerapp.ViewModels;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.Observer;
-
-import com.au615584.urineanalyzerapp.Activities.ProfessionalAcitivity;
-import com.au615584.urineanalyzerapp.FirebaseConnection;
-import com.au615584.urineanalyzerapp.IFirebaseConnection;
-import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 public class ProfessionalViewModelTest {
     /*

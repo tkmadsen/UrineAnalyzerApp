@@ -7,9 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.Controller;
+import com.au615584.urineanalyzerapp.IController;
 
 public class LoginViewModel {
-    private Controller controller;
+    private IController controller;
 
     public LoginViewModel() {
         controller = Controller.getInstance();

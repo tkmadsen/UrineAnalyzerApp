@@ -1,12 +1,10 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
-import static org.junit.Assert.*;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.au615584.urineanalyzerapp.Activities.PatientActivity;
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
-import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothCommunication;
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
+import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothConnection;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,11 +23,11 @@ public class BTRepositoryTest {
 
     private BTRepository repository;
     private PatientActivity mockPatActivity;
-    private IBluetoothCommunication mockBtCom;
+    private IBluetoothConnection mockBtCom;
 
     @Before
     public void setUp() throws Exception {
-        mockBtCom=mock(BluetoothCommunication.class);
+        mockBtCom=mock(BluetoothConnection.class);
         repository=new BTRepository(mockBtCom);
     }
 

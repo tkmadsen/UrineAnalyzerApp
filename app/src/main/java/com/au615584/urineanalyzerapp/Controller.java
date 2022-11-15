@@ -13,7 +13,7 @@ import com.au615584.urineanalyzerapp.Repositories.IProRepository;
 import com.au615584.urineanalyzerapp.Repositories.pRepository;
 
 
-public class Controller {
+public class Controller implements IController{
     //Instance for Singleton pattern
     private static Controller instance;
     private IEPJRepository EPJrepository;

@@ -1,9 +1,9 @@
 package com.au615584.urineanalyzerapp.Model;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginEPJ {
+public class LoginEPJBody {
+
   @SerializedName("securityPrincipalId")
   @Expose
   private String securityPrincipalId;
@@ -70,4 +70,5 @@ public class LoginEPJ {
   public void setTokenLifeTime(Integer tokenLifeTime) {
     this.tokenLifeTime = tokenLifeTime;
   }
+
 }

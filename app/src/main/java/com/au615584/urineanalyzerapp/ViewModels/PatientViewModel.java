@@ -27,5 +27,5 @@ public class PatientViewModel {
     return controller.state();
   }
   public LiveData<String> cpr(){return controller.cpr();}
-  public LiveData<String> result(){return controller.result();}
+  public LiveData<Boolean> isBtConnedted() { return controller.isBtConnected(); }
 }

@@ -21,4 +21,5 @@
     <string name="guide3Txt">4. Placer urinstix i åbningen til venstre på toppen af apparatet og afvent, at stixen fastholdes af systemet</string>
     <string name="correctTestTXt">Resultat modtaget</string>
     <string name="ProgressTxt">Analyserer</string>
+  <string name="btErrorTxt">Der skete en fejl. Venligst tilkald hjælp.</string>
 </resources>

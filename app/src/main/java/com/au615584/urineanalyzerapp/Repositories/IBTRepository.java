@@ -11,5 +11,5 @@ public interface IBTRepository {
     LiveData<String> cpr();
 
     LiveData<String> result();
-
+    LiveData<Boolean> isBtConnected();
 }

@@ -2,6 +2,10 @@ package com.au615584.urineanalyzerapp.Repositories;
 
 import android.util.Log;
 
+import com.au615584.urineanalyzerapp.AuthorizationService;
+import com.au615584.urineanalyzerapp.Constants;
+import com.au615584.urineanalyzerapp.Model.LoginEPJBody;
+import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
 import com.au615584.urineanalyzerapp.Model.Observation.BasedOn;
 import com.au615584.urineanalyzerapp.Model.Observation.Code;
 import com.au615584.urineanalyzerapp.Model.Observation.Coding;
@@ -19,7 +23,9 @@ import com.au615584.urineanalyzerapp.Model.Observation.ValueCoding;
 import com.au615584.urineanalyzerapp.Model.Observation.ValueQuantity;
 import com.au615584.urineanalyzerapp.Model.Observation.ValueReference;
 import com.au615584.urineanalyzerapp.ObservationService;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +34,16 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
     private ObservationService obsService;
+    private AuthorizationService authService;
+    private static FileWriter fileWriter;
+
 
     EPJRepository() {
 
@@ -40,18 +51,26 @@ public class EPJRepository implements IEPJRepository {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("EPJ URL") //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
+
+        //Creating observationService
+        Retrofit.Builder obsBuilder = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL+Constants.OBSERVATION_URL) //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
                 .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit obsRetrofit = obsBuilder.build();
+        obsService = obsRetrofit.create(ObservationService.class);
 
-        obsService = retrofit.create(ObservationService.class);*/
+
+        //Creating authorizationService
+        Retrofit.Builder authBuilder = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL+Constants.LOGIN_URL) //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit authRetrofit = authBuilder.build();
+        authService = authRetrofit.create(AuthorizationService.class);
     }
 
-    public ObservationService getObsService(){
-        return obsService;
-    }
+
     //Singleton patten
     public static EPJRepository getInstance() {
 
@@ -62,10 +81,81 @@ public class EPJRepository implements IEPJRepository {
     }
 
 
+
+    public void saveToLog(double Glukose, double Albumin, String Cpr) {
+        Observation obs = createObservation(Glukose, Albumin, Cpr);
+        Log.d("EPJRepository", new Gson().toJson(obs));
+    }
+
+    private static String token;
+    public void createLoginCall() {
+        LoginEPJBody loginBody = new LoginEPJBody();
+        loginBody.setCreateSession(true);
+        loginBody.setPassword("Sikkerhed");
+        loginBody.setRole("Udvikler");
+        loginBody.setTokenLifeTime(60000);
+        loginBody.setUnit("What"); //TODO what to set?
+        loginBody.setSecurityPrincipalId("sp-gud"); //TODO what to set?
+
+        Call<LoginEPJResponse> call = authService.login(loginBody);
+
+        call.enqueue(new Callback<LoginEPJResponse>() {
+            @Override
+            public void onResponse(Call<LoginEPJResponse> call, Response<LoginEPJResponse> response) {
+                if(response.isSuccessful()) {
+                    token = response.body().getToken();
+                    Log.d("EPJRepository", "Successfully retrieved token");
+                } else {
+                    Log.d("EPJRepository", "Login not correct");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginEPJResponse> call, Throwable t) {
+                Log.d("EPJRepository", "Failed on login");
+            }
+        });
+    }
+
+
+    @Override
+    public void saveToEPJ(double Albumin, double Glukose, String Cpr) {
+        Observation obs = createObservation(Albumin, Glukose, Cpr);
+
+        createLoginCall();
+
+        Call<Observation> call = obsService.createObservation(token, obs);
+
+        call.enqueue(new Callback<Observation>() {
+            @Override
+            public void onResponse(Call<Observation> call, Response<Observation> response) {
+                if (response.isSuccessful()) {
+                    Log.d("EPJRepository", "Observation created successfully");
+                } else {
+                    Log.d("EPJRepository", "Error creating Observation");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Observation> call, Throwable t) {
+                Log.d("EPJRepository", "Error creating Observation");
+            }
+        });
+    }
+
+
     public Observation createObservation(double Glukose, double Albumin, String CPR) {
         Observation obs = new Observation();
 
         obs.setResourceType("Observation");
+        Meta observationMeta = new Meta();
+        List<String> observationMetaProfileList = new ArrayList<>();
+        observationMetaProfileList.add("http://columnafhir.dk/p/ColumnaActivityResult");
+        observationMeta.setProfile(observationMetaProfileList);
+        obs.setMeta(observationMeta);
+
+
+
 
         List<Contained> contained = new ArrayList<>();
         //Creation contained location
@@ -203,7 +293,7 @@ public class EPJRepository implements IEPJRepository {
 
         //Adding subject to observation
         Subject subject = new Subject();
-        subject.setReference("Patient?identifier=http://cpr.dk/personregistret|0707076LK1&_profile=http://columnafhir.dk/p/ColumnaPatient");
+        subject.setReference("Patient?identifier=http://cpr.dk/personregistret|"+CPR+"&_profile=http://columnafhir.dk/p/ColumnaPatient");
 
         obs.setSubject(subject); //TODO find ud af hvordan cpr nummer skal tilføjes
 
@@ -332,26 +422,5 @@ public class EPJRepository implements IEPJRepository {
         obs.setComponent(componentList);
 
         return obs;
-    }
-
-    public void saveToFile(double Glukose, double Albumin, String Cpr) {
-        Observation obs = createObservation(Glukose, Albumin, Cpr);
-    }
-
-    @Override
-    public void saveToEPJ(double Albumin, double Glukose, String Cpr) {
-        Observation obs = createObservation(Albumin, Glukose, Cpr);
-        instance.getObsService().createObservation(obs).enqueue(new Callback<Observation>() {
-
-            @Override
-            public void onResponse(Call<Observation> call, Response<Observation> response) {
-                Log.d("EPJREP", "Observation"+response.body().getSubject());
-            }
-
-            @Override
-            public void onFailure(Call<Observation> call, Throwable t) {
-                Log.d("EPJREP", "Error creating Observation");
-            }
-        });
     }
 }

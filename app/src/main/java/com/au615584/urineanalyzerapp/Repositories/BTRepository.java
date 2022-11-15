@@ -3,7 +3,7 @@ package com.au615584.urineanalyzerapp.Repositories;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothCommunication;
+import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothCommunication;
 
 public class BTRepository implements IBTRepository {
@@ -16,7 +16,7 @@ public class BTRepository implements IBTRepository {
     BTRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
         state = new MutableLiveData<>("");
-        btConnection = new BluetoothCommunication();
+        btConnection = new BluetoothConnection();
     }
 
     BTRepository(IBluetoothCommunication btCon) {
@@ -49,4 +49,5 @@ public class BTRepository implements IBTRepository {
     public LiveData<String> result() {
         return btConnection.resultString();
     }
+    public LiveData<Boolean> isBtConnected() { return  btConnection.isBtConnected(); }
 }

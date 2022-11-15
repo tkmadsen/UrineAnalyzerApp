@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
-public class BluetoothCommunication implements IBluetoothCommunication{
+public class BluetoothConnection implements IBluetoothCommunication{
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
   private State stateC;
@@ -28,12 +28,14 @@ public class BluetoothCommunication implements IBluetoothCommunication{
   public MutableLiveData<String> state;
   public MutableLiveData<String> cpr;
   private MutableLiveData<String> result;
+  public MutableLiveData<Boolean> isBtConnected;
 
-  public BluetoothCommunication() {
+  public BluetoothConnection() {
     stateC = new State();
     state = new MutableLiveData<>("Welcome");
     cpr= new MutableLiveData<>("CPRdefault");
     result= new MutableLiveData<>("resultDefault");
+    isBtConnected = new MutableLiveData<>(true);
   }
 
   public boolean isBluetoothEnabled() {
@@ -72,41 +74,10 @@ public class BluetoothCommunication implements IBluetoothCommunication{
       new ConnectThread(device).start();
     } catch (IOException e) {
       Log.e("BTConnection", "Fail in starting connectThread", e);
-    }
-  }
-/*
-  public void changeState(String btMessage) {
-    Log.d("BTConnection", "Reached changeState()");
-    Character rpiProtocol = btMessage.charAt(0);
-    Log.d("BTConnection", "btMessage: " + btMessage);
-    Log.d("BTConnection", "int for RpiProtocol: " + rpiProtocol);
-    switch(rpiProtocol) {
-      case '1':
-        state.postValue("Guide");
-        Log.d("BTConnection", "ChangeState(), Received 1");
-        break;
-      case '2':
-        state.postValue("Analyzing");
-        Log.d("BTConnection", "ChangeState(), Received 2");
-        break;
-      case '3':
-        state.postValue("Result");
-        Log.d("BTConnection", "ChangeState(), Received 3");
-        break;
-      case '4':
-        state.postValue("Welcome");
-        Log.d("BTConnection", "ChangeState(), Received 5");
-        break;
-      default:
-        state.postValue("Welcome");
-        Log.d("BTConnection", "ChangeState(), default");
+      isBtConnected.postValue(false);
 
     }
-
-
   }
-
- */
 
   public LiveData<String> fragmentState() {
     return stateC.lState();
@@ -133,6 +104,7 @@ public class BluetoothCommunication implements IBluetoothCommunication{
         tmp = btDevice.createRfcommSocketToServiceRecord(uuid);
       } catch (IOException e) {
         Log.e("BTConnection", "Socket's create method failed", e);
+        isBtConnected.postValue(false);
       }
 
       socket = tmp;
@@ -143,6 +115,7 @@ public class BluetoothCommunication implements IBluetoothCommunication{
         socket.connect();
       } catch (IOException connectException) {
         Log.e("BTConnection", "Socket's connect method failed", connectException);
+        isBtConnected.postValue(false);
       }
 
 
@@ -173,6 +146,7 @@ public class BluetoothCommunication implements IBluetoothCommunication{
           stateC.changeState(incomingMessage);
         } catch (IOException e) {
           Log.e("BTConnection", "write: Error reading Input Stream. " + e.getMessage() );
+          isBtConnected.postValue(false);
           break;
         }
       }
@@ -181,32 +155,6 @@ public class BluetoothCommunication implements IBluetoothCommunication{
     public void write(String msg) throws IOException {
       OutputStream outputStream = socket.getOutputStream();
       outputStream.write(msg.getBytes());
-    }
-
-    public void readMessage() throws IOException {
-      String readMessage1 = null;
-      while(readMessage1 == null) {
-        InputStream mmInputStream = socket.getInputStream();
-        byte[] buffer = new byte[1048];
-        int bytes;
-
-        try {
-          bytes = mmInputStream.read(buffer);
-          readMessage1 = new String(buffer, 0, bytes);
-          Log.d("BTConnection", "Received: " + readMessage1);
-          stateC.changeState(readMessage1);
-        } catch (IOException e) {
-          Log.e("BTConnection", "Problems occurred!");
-        }
-      }
-
-    }
-
-    public String receive() throws IOException {
-      readMessage = null;
-      //readMessage = readMessage();
-
-      return readMessage;
     }
   }
 
@@ -232,4 +180,12 @@ public class BluetoothCommunication implements IBluetoothCommunication{
     }
     return result;
   }
+
+  public LiveData<Boolean> isBtConnected() {
+    if(isBtConnected == null) {
+      isBtConnected = new MutableLiveData<>();
+    }
+    return isBtConnected;
+  }
+
 }

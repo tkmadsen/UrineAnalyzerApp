@@ -1,5 +1,7 @@
 package com.au615584.urineanalyzerapp;
 
+import com.au615584.urineanalyzerapp.Model.LoginEPJBody;
+import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
 import com.au615584.urineanalyzerapp.Model.Observation.Observation;
 
 import java.util.Map;
@@ -10,12 +12,14 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 
 public interface ObservationService {
-    @POST("observations") //TODO tjek bearer
-    Call<Observation> createObservation(@Header("Bearer") String authToken, @Body Observation observation);
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("/Observation") //TODO tjek bearer
+    Call<Observation> createObservation(@Header("Authorization") String authToken, @Body Observation observation);
 
     @FormUrlEncoded
     @POST("observations")
@@ -24,4 +28,8 @@ public interface ObservationService {
     @FormUrlEncoded
     @POST("observations")
     Call<Observation> createObservation(@FieldMap Map<String, String> fields);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("/columna/platform/ws/auth/login")
+    Call<LoginEPJResponse> login(@Body LoginEPJBody login);
 }

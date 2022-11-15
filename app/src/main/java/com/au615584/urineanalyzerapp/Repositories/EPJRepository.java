@@ -2,7 +2,6 @@ package com.au615584.urineanalyzerapp.Repositories;
 
 import android.util.Log;
 
-import com.au615584.urineanalyzerapp.AuthorizationService;
 import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.Model.LoginEPJBody;
 import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
@@ -25,7 +24,6 @@ import com.au615584.urineanalyzerapp.Model.Observation.ValueReference;
 import com.au615584.urineanalyzerapp.ObservationService;
 import com.google.gson.Gson;
 
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +39,6 @@ public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
     private ObservationService obsService;
-    private AuthorizationService authService;
-    private static FileWriter fileWriter;
 
 
     EPJRepository() {
@@ -54,20 +50,11 @@ public class EPJRepository implements IEPJRepository {
 
         //Creating observationService
         Retrofit.Builder obsBuilder = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL+Constants.OBSERVATION_URL) //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
+                .baseUrl(Constants.BASE_URL) //TODO indsæt base-url
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit obsRetrofit = obsBuilder.build();
         obsService = obsRetrofit.create(ObservationService.class);
-
-
-        //Creating authorizationService
-        Retrofit.Builder authBuilder = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL+Constants.LOGIN_URL) //TODO JEG TROR DET ER HER, VI SKAL SÆTTE NOGET IND
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit authRetrofit = authBuilder.build();
-        authService = authRetrofit.create(AuthorizationService.class);
     }
 
 
@@ -97,7 +84,7 @@ public class EPJRepository implements IEPJRepository {
         loginBody.setUnit("What"); //TODO what to set?
         loginBody.setSecurityPrincipalId("sp-gud"); //TODO what to set?
 
-        Call<LoginEPJResponse> call = authService.login(loginBody);
+        Call<LoginEPJResponse> call = obsService.login(loginBody);
 
         call.enqueue(new Callback<LoginEPJResponse>() {
             @Override
@@ -124,7 +111,7 @@ public class EPJRepository implements IEPJRepository {
 
         createLoginCall();
 
-        Call<Observation> call = obsService.createObservation(token, obs);
+        Call<Observation> call = obsService.createObservation("Bearer " + token, obs);
 
         call.enqueue(new Callback<Observation>() {
             @Override

@@ -5,10 +5,10 @@ import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface AuthorizationService {
 
-  @POST("login")
-  Call<LoginEPJResponse> login(@Body LoginEPJBody login);
+
 }

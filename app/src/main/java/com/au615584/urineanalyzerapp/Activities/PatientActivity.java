@@ -152,7 +152,7 @@ public class PatientActivity extends AppCompatActivity {
                 }
             }
         });
-        /*
+        /* //TODO uncomment this when testing
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +164,7 @@ public class PatientActivity extends AppCompatActivity {
                 // Open Guide fragment: DENNE VIL SENERE SKULLE KALDES, NÅR KORT SCANNES
                 if (welcomeFragment != null && welcomeFragment.isVisible()) {
                     showDialouge();
+                    Fragment guideFragment = new GuideFragment("2222225555");
                     getSupportFragmentManager()
                             .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
                             .commit();

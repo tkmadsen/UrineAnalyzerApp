@@ -49,5 +49,5 @@ public class BTRepository implements IBTRepository {
     public LiveData<String> result() {
         return btConnection.resultString();
     }
-    public LiveData<Boolean> isBtConnected() { return  btConnection.isBtConnected(); }
+    public LiveData<Boolean> isBtConnected() { return  btConnection .isBtConnected(); }
 }

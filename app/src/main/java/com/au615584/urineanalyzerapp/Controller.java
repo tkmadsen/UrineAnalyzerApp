@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
@@ -31,7 +30,7 @@ public class Controller implements IController{
 
     public Controller() {
         btRepository = BTRepository.getInstance();
-        EPJrepository = EPJRepository.getInstance();
+        //EPJrepository = EPJRepository.getInstance();
         proRepository = pRepository.getInstance();
     }
 
@@ -66,7 +65,7 @@ public class Controller implements IController{
             String[] resultList = result.split(",");
             double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
             double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
-            EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString());
+            //EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString()); //TODO uncomment when testing api
         } else {
             Log.d("Controller", "Fail on test");
         }

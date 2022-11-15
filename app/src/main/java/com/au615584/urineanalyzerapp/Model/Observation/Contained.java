@@ -34,7 +34,7 @@ public class Contained {
   private String intent;
   @SerializedName("code")
   @Expose
-  private Coding_Code codingCode;
+  private Code code;
 
   public String getResourceType() {
     return resourceType;
@@ -100,12 +100,12 @@ public class Contained {
     this.intent = intent;
   }
 
-  public Coding_Code getCode() {
-    return codingCode;
+  public Code getCode() {
+    return code;
   }
 
-  public void setCode(Coding_Code codingCode) {
-    this.codingCode = codingCode;
+  public void setCode(Code code) {
+    this.code = code;
   }
 
 }

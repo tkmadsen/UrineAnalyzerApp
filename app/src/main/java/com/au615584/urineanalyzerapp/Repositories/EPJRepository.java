@@ -1,8 +1,10 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
+import android.os.Build;
 import android.util.Log;
 
-import com.au615584.urineanalyzerapp.Constants;
+import androidx.annotation.RequiresApi;
+
 import com.au615584.urineanalyzerapp.Model.LoginEPJBody;
 import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
 import com.au615584.urineanalyzerapp.Model.Observation.BasedOn;
@@ -50,7 +52,7 @@ public class EPJRepository implements IEPJRepository {
 
         //Creating observationService
         Retrofit.Builder obsBuilder = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL) //TODO indsæt base-url
+                .baseUrl("baseUrl") //TODO indsæt base-url
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit obsRetrofit = obsBuilder.build();
@@ -69,6 +71,7 @@ public class EPJRepository implements IEPJRepository {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
     public void saveToLog(double Glukose, double Albumin, String Cpr) {
         Observation obs = createObservation(Glukose, Albumin, Cpr);
         Log.d("EPJRepository", new Gson().toJson(obs));
@@ -105,6 +108,7 @@ public class EPJRepository implements IEPJRepository {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
     @Override
     public void saveToEPJ(double Albumin, double Glukose, String Cpr) {
         Observation obs = createObservation(Albumin, Glukose, Cpr);
@@ -131,6 +135,7 @@ public class EPJRepository implements IEPJRepository {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Observation createObservation(double Glukose, double Albumin, String CPR) {
         Observation obs = new Observation();
 
@@ -205,9 +210,9 @@ public class EPJRepository implements IEPJRepository {
         codingProcedure.setDisplay("Urinstiks");
 
         codingsProcedure.add(codingProcedure);
-        Type typeProcedure = new Type();
-        typeProcedure.setCoding(codingsProcedure);
-        containedProcedure.setType(typeProcedure);
+        Code codeProcedure = new Code();
+        codeProcedure.setCoding(codingsProcedure);
+        containedProcedure.setCode(codeProcedure);
 
         //Adding both containd to list of contained and adding to obs
         contained.add(containedLocation);
@@ -236,9 +241,9 @@ public class EPJRepository implements IEPJRepository {
 
         Extension_Extension extensionInExtension2 = new Extension_Extension();
         extensionInExtension2.setUrl("http://columnafhir.dk/x/ColumnaActivityResult-speciality/hospital");
-        ValueReference valureReference = new ValueReference();
-        valureReference.setReference("#1");
-        extensionInExtension2.setValueReference(valureReference);
+        ValueReference valueReference = new ValueReference();
+        valueReference.setReference("#1");
+        extensionInExtension2.setValueReference(valueReference);
         extenionsInExtensionList.add(extensionInExtension2);
 
         //Adding extensionsInExtensions to extension
@@ -247,7 +252,8 @@ public class EPJRepository implements IEPJRepository {
         //Creating second extension
         Extension extension2 = new Extension();
         extension2.setUrl("http://columnafhir.dk/x/ColumnaActivityResult-effective-date-time");
-        extension2.setValueDateTime("2022-11-08T13:17:00.000+01:00"); //TODO denne skal måske være dynamisk?
+        extension2.setValueDateTime("2022-11-08T13:17:00.000+01:00");
+        extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00"); //TODO tjek med denne
 
         //Adding extenions to list of extions and adding to observation
         extensionList.add(extension1);

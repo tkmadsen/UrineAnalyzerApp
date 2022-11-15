@@ -22,7 +22,7 @@ public class ProcessingFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    epjRepository = EPJRepository.getInstance();
+    //epjRepository = EPJRepository.getInstance(); TODO uncomment when testing api
   }
 
   @Override
@@ -33,7 +33,7 @@ public class ProcessingFragment extends Fragment {
     spinner = v.findViewById(R.id.progressBar);
     spinner.setVisibility(View.VISIBLE);
 
-    epjRepository.saveToEPJ(2, 1, "2222225555"); //TODO delete this when done testing
+    //epjRepository.saveToEPJ(2, 1, "2222225555"); //TODO uncomment when testing api
     return  v;
   }
 }

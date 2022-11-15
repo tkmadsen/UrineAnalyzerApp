@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -39,6 +41,7 @@ public class PatientActivity extends AppCompatActivity {
     //private BluetoothCommunication btConnection;
     private EPJRepository epjRepository;
 
+    @RequiresApi(api = Build.VERSION_CODES.O) //TODO needed for dateTime in observation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,8 @@ public class PatientActivity extends AppCompatActivity {
         //btnTest=findViewById(R.id.testB);
         btnPro=findViewById(R.id.proB);
         vm= new PatientViewModel();
-        epjRepository = EPJRepository.getInstance();
-        epjRepository.saveToLog(2, 1, "2222225555");
+        //epjRepository = EPJRepository.getInstance(); //TODO uncomment when testing api
+        //epjRepository.saveToLog(2, 1, "2222225555");
 
         Log.d("onCreate1 Patient Activity", "Checking if bluetooth is enabled ");
         /*

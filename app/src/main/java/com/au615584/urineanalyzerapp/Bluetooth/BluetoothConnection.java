@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.UrineAnalyzerApplication;
 
 import java.io.IOException;
@@ -29,6 +32,7 @@ public class BluetoothConnection implements IBluetoothConnection {
   public MutableLiveData<String> cpr;
   private MutableLiveData<String> result;
   public MutableLiveData<Boolean> isBtConnected;
+  public EPJRepository epjRepository;
 
   public BluetoothConnection() {
     stateC = new State();
@@ -36,6 +40,7 @@ public class BluetoothConnection implements IBluetoothConnection {
     cpr= new MutableLiveData<>("CPRdefault");
     result= new MutableLiveData<>("resultDefault");
     isBtConnected = new MutableLiveData<>(true);
+    epjRepository = EPJRepository.getInstance();
   }
 
   public boolean isBluetoothEnabled() {
@@ -130,6 +135,7 @@ public class BluetoothConnection implements IBluetoothConnection {
       mmOutputStream = tmpOut;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void run(){
       byte[] buffer = new byte[1024];  // buffer store for the stream
 
@@ -158,12 +164,23 @@ public class BluetoothConnection implements IBluetoothConnection {
     }
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   private void saveIncoming(String incomingMessage) {
     if(incomingMessage.charAt(0)=='1'){
       cpr.postValue(incomingMessage.substring(1));
       Log.d("BTConnection", "saveCPR: "+cpr);
     } else if (incomingMessage.charAt(0) == '3'){
       result.postValue(incomingMessage.substring(1));
+
+
+      String result = incomingMessage;
+      //if(result.contains("SPLIT")) {
+      String[] resultList = result.split("SPLIT");
+      double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
+      double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
+      //EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString()); //TODO uncomment when testing api
+      Log.d("Controller", "before saving to epj");
+      epjRepository.saveToLog(glukose, albumin, cpr.toString());
       Log.d("BTConnection", "saveResult: " + result );
     }
   }

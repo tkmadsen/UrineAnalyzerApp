@@ -17,9 +17,10 @@ import retrofit2.http.POST;
 
 
 public interface ObservationService {
+    //Reference: https://stackoverflow.com/questions/71316855/how-to-get-the-bearer-token-in-the-response-body-in-android-studio
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("/Observation") //TODO tjek bearer
-    Call<Observation> createObservation(@Header("Authorization") String authToken, @Body Observation observation);
+    @POST("/columna/fhir/Observation/") //TODO tjek bearer
+    Call<Observation> createObservation(@Header("Authorization") String authToken, @Header("Cookie") String columnaSession, @Body Observation observation);
 
     @FormUrlEncoded
     @POST("observations")

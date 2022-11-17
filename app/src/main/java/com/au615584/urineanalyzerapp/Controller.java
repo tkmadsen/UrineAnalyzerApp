@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
+import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
@@ -30,7 +31,7 @@ public class Controller implements IController{
 
     public Controller() {
         btRepository = BTRepository.getInstance();
-        //EPJrepository = EPJRepository.getInstance();
+        EPJrepository = EPJRepository.getInstance();
         proRepository = pRepository.getInstance();
     }
 
@@ -54,22 +55,24 @@ public class Controller implements IController{
     public LiveData<Boolean> isBtConnected(){ return btRepository.isBtConnected();}
 
     public LiveData<String> result(){
-        sendResultToEPJ();
+        //sendResultToEPJ();
+        Log.d("Controller", "result received");
         return btRepository.result();
     }
 
     //For EPJRepository
     public void sendResultToEPJ(){
         String result = btRepository.result().toString();
-        if(result.contains(",")) {
-            String[] resultList = result.split(",");
-            double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
-            double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
+        //if(result.contains("SPLIT")) {
+        String[] resultList = result.split("SPLIT");
+        double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
+        double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
             //EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString()); //TODO uncomment when testing api
-        } else {
-            Log.d("Controller", "Fail on test");
-        }
+        Log.d("Controller", "before saving to epj");
+        EPJrepository.saveToLog(glukose, albumin, cpr().getValue());
+        Log.d("Controller", "after saving to epj");
+        //} else {
+        //    Log.d("Controller", "Fail on test");
+        //}
     }
-
-
 }

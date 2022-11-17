@@ -18,6 +18,7 @@ public interface IController {
     LiveData<String> state();
 
     LiveData<String> cpr();
+    LiveData<String> result();
 
     LiveData<Boolean> isBtConnected();
 

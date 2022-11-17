@@ -34,6 +34,7 @@ public class PatientActivity extends AppCompatActivity {
 
     private Button btnTest;
     private String CPR="Default";
+    private String Result="Default";
     private ImageButton btnPro;
     private ActivityResultLauncher<Intent> signInLauncher;
     private ActivityResultLauncher<Intent> bluetoothEnableLauncher;
@@ -50,7 +51,7 @@ public class PatientActivity extends AppCompatActivity {
         btnPro=findViewById(R.id.proB);
         vm= new PatientViewModel();
         //epjRepository = EPJRepository.getInstance(); //TODO uncomment when testing api
-        //epjRepository.saveToLog(2, 1, "2222225555");
+        //epjRepository.createLoginCall(2, 1, "0102030001");
 
         Log.d("onCreate1 Patient Activity", "Checking if bluetooth is enabled ");
         /*
@@ -153,6 +154,13 @@ public class PatientActivity extends AppCompatActivity {
                                 .commit();
                         break;
                 }
+            }
+        });
+
+        vm.result().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Result = s;
             }
         });
         /* //TODO uncomment this when testing

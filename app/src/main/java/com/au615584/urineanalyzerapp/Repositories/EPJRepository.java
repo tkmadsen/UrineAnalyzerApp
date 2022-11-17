@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.Model.LoginEPJBody;
 import com.au615584.urineanalyzerapp.Model.LoginEPJResponse;
 import com.au615584.urineanalyzerapp.Model.Observation.BasedOn;
@@ -52,7 +53,7 @@ public class EPJRepository implements IEPJRepository {
 
         //Creating observationService
         Retrofit.Builder obsBuilder = new Retrofit.Builder()
-                .baseUrl("baseUrl") //TODO indsæt base-url
+                .baseUrl(Constants.BASE_URL) //TODO indsæt base-url
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit obsRetrofit = obsBuilder.build();
@@ -78,23 +79,28 @@ public class EPJRepository implements IEPJRepository {
     }
 
     private static String token;
-    public void createLoginCall() {
+    private static String cookie;
+    public void createLoginCall(double glukose, double albumin, String cpr) {
         LoginEPJBody loginBody = new LoginEPJBody();
         loginBody.setCreateSession(true);
-        loginBody.setPassword("Sikkerhed");
+        loginBody.setPassword("sikkerhed");
         loginBody.setRole("Udvikler");
         loginBody.setTokenLifeTime(60000);
-        loginBody.setUnit("What"); //TODO what to set?
+        loginBody.setUnit("72.09.03.1"); //TODO what to set?
         loginBody.setSecurityPrincipalId("sp-gud"); //TODO what to set?
 
         Call<LoginEPJResponse> call = obsService.login(loginBody);
 
         call.enqueue(new Callback<LoginEPJResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<LoginEPJResponse> call, Response<LoginEPJResponse> response) {
                 if(response.isSuccessful()) {
-                    token = response.body().getToken();
-                    Log.d("EPJRepository", "Successfully retrieved token");
+                    cookie = response.headers().get("Set-Cookie");
+                    Log.d("EPJRepository", cookie);
+                    token = "Bearer " + response.body().getToken();
+                    saveToEPJ(glukose, albumin, cpr);
+                    Log.d("EPJRepository", "Successfully retrieved token: " + token);
                 } else {
                     Log.d("EPJRepository", "Login not correct");
                 }
@@ -113,9 +119,7 @@ public class EPJRepository implements IEPJRepository {
     public void saveToEPJ(double Albumin, double Glukose, String Cpr) {
         Observation obs = createObservation(Albumin, Glukose, Cpr);
 
-        createLoginCall();
-
-        Call<Observation> call = obsService.createObservation("Bearer " + token, obs);
+        Call<Observation> call = obsService.createObservation(token, cookie, obs);
 
         call.enqueue(new Callback<Observation>() {
             @Override
@@ -253,7 +257,7 @@ public class EPJRepository implements IEPJRepository {
         Extension extension2 = new Extension();
         extension2.setUrl("http://columnafhir.dk/x/ColumnaActivityResult-effective-date-time");
         extension2.setValueDateTime("2022-11-08T13:17:00.000+01:00");
-        extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00"); //TODO tjek med denne
+        //extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00"); //TODO tjek med denne
 
         //Adding extenions to list of extions and adding to observation
         extensionList.add(extension1);

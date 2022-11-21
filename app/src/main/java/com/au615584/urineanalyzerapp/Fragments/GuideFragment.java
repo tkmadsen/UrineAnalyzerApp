@@ -11,9 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GuideFragment extends Fragment {
     private TextView txtGuide, txtCpr;
     private ImageView imgGuide;

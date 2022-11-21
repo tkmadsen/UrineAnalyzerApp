@@ -17,6 +17,10 @@ public class EpjFailureFragment extends Fragment {
   private TextView txtResult;
 
 
+  public EpjFailureFragment() {
+
+  }
+
   public EpjFailureFragment(String Result) {
     result = Result.substring(1);
   }

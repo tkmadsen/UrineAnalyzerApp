@@ -10,19 +10,16 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 
 
 public class ProcessingFragment extends Fragment {
   private TextView txtProgress;
   private ProgressBar spinner;
-  private EPJRepository epjRepository;
 
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    //epjRepository = EPJRepository.getInstance(); TODO uncomment when testing api
   }
 
   @Override
@@ -33,7 +30,6 @@ public class ProcessingFragment extends Fragment {
     spinner = v.findViewById(R.id.progressBar);
     spinner.setVisibility(View.VISIBLE);
 
-    //epjRepository.saveToEPJ(2, 1, "2222225555"); //TODO uncomment when testing api
     return  v;
   }
 }

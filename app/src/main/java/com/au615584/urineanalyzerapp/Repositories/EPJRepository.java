@@ -55,7 +55,7 @@ public class EPJRepository implements IEPJRepository {
 
         //Creating observationService
         Retrofit.Builder obsBuilder = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL) //TODO indsæt base-url
+                .baseUrl(Constants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit obsRetrofit = obsBuilder.build();

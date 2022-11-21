@@ -11,26 +11,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-      android:id="@+id/imageView6"
-      android:layout_width="329dp"
-      android:layout_height="350dp"
-      android:layout_marginTop="124dp"
-      android:src="@drawable/sad_smiley"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.501"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
       android:id="@+id/TestFailTxt"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/resultFailTxt"
       android:textSize="48sp"
-      app:layout_constraintEnd_toEndOf="@+id/imageView6"
-      app:layout_constraintStart_toStartOf="@+id/imageView6"
-      app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+      tools:layout_editor_absoluteX="149dp"
+      tools:layout_editor_absoluteY="474dp" />
+
+    <TextView
+      android:id="@+id/resultLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/resultLabel"
+      android:textSize="48sp"
+      app:layout_constraintStart_toStartOf="@+id/TestFailTxt"
+      app:layout_constraintTop_toBottomOf="@+id/TestFailTxt" />
+
+    <TextView
+      android:id="@+id/resultsTxt"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="48sp"
+      app:layout_constraintEnd_toEndOf="@+id/TestFailTxt"
+      app:layout_constraintStart_toEndOf="@+id/resultLabel"
+      app:layout_constraintTop_toBottomOf="@+id/TestFailTxt" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

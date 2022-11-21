@@ -59,7 +59,6 @@ public class PatientActivity extends AppCompatActivity {
         Fragment resultFragment=new ResultFragment();
         Fragment processingFragment=new ProcessingFragment();
         Fragment btFailFragment = new btFailFragment();
-        Fragment resultFailFragment = new EpjFailureFragment();
         Fragment testFailFragment = new TestFailureFragment();
 
         //Apply default fragment
@@ -138,8 +137,9 @@ public class PatientActivity extends AppCompatActivity {
                         break;
                     case "Result Failure":
                         Log.d("PatientActivity", "ChangeState(), Received Result Failure");
+                        EpjFailureFragment epjFailureFragment = new EpjFailureFragment(btMessage);
                         getSupportFragmentManager()
-                                .beginTransaction().replace(R.id.fraglist,resultFailFragment, "RESULT_FAILURE_FRAGMENT")
+                                .beginTransaction().replace(R.id.fraglist,epjFailureFragment, "EPJ_FAILURE_FRAGMENT")
                                 .commit();
                         break;
                 }

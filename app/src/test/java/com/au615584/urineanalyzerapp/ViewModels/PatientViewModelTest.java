@@ -8,7 +8,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.au615584.urineanalyzerapp.Activities.PatientActivity;
 import com.au615584.urineanalyzerapp.Controller;
-import com.au615584.urineanalyzerapp.IController;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,11 +46,11 @@ public class PatientViewModelTest {
         verify(mockController, times(1)).isBluetoothEnabled();
     }
 
-    @Test
-    public void state() {
-        patientViewModel.state();
-        verify(mockController, times(1)).state();
-    }
+//    @Test
+//    public void state() {
+//        patientViewModel.state();
+//        verify(mockController, times(1)).state();
+//    }
 
 
 }

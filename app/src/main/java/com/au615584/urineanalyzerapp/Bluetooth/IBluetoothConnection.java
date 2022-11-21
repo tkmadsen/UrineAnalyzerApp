@@ -7,11 +7,7 @@ public interface IBluetoothConnection {
 
     boolean isBluetoothEnabled();
 
-    LiveData<String> fragmentState();
-
-    LiveData<String> cprString();
-
-    LiveData<String> resultString();
+    LiveData<String> btMessage();
 
     LiveData<Boolean> isBtConnected();
 }

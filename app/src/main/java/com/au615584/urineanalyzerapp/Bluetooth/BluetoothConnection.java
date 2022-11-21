@@ -25,20 +25,14 @@ import java.util.UUID;
 public class BluetoothConnection implements IBluetoothConnection {
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
-  private State stateC;
   private Set<BluetoothDevice> pairedDevices;
   private String readMessage = null;
-  public MutableLiveData<String> state;
-  public MutableLiveData<String> cpr;
-  private MutableLiveData<String> result;
+  private MutableLiveData<String> btMessage;
   public MutableLiveData<Boolean> isBtConnected;
   public EPJRepository epjRepository;
 
   public BluetoothConnection() {
-    stateC = new State();
-    state = new MutableLiveData<>("Welcome");
-    cpr= new MutableLiveData<>("CPRdefault");
-    result= new MutableLiveData<>("resultDefault");
+    btMessage = new MutableLiveData<>("");
     isBtConnected = new MutableLiveData<>(true);
     epjRepository = EPJRepository.getInstance();
   }
@@ -82,10 +76,6 @@ public class BluetoothConnection implements IBluetoothConnection {
       isBtConnected.postValue(false);
 
     }
-  }
-
-  public LiveData<String> fragmentState() {
-    return stateC.lState();
   }
 
   public class ConnectThread extends Thread {
@@ -148,8 +138,8 @@ public class BluetoothConnection implements IBluetoothConnection {
           bytes = mmInputStream.read(buffer);
           String incomingMessage = new String(buffer, 0, bytes);
           Log.d("BTConnection", "InputStream: " + incomingMessage);
-          saveIncoming(incomingMessage);
-          stateC.changeState(incomingMessage);
+          //saveIncoming(incomingMessage);
+          btMessage.postValue(incomingMessage);
         } catch (IOException e) {
           Log.e("BTConnection", "write: Error reading Input Stream. " + e.getMessage() );
           isBtConnected.postValue(false);
@@ -164,38 +154,21 @@ public class BluetoothConnection implements IBluetoothConnection {
     }
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.O)
-  private void saveIncoming(String incomingMessage) {
-    if(incomingMessage.charAt(0)=='1'){
-      cpr.postValue(incomingMessage.substring(1));
-      Log.d("BTConnection", "saveCPR: "+cpr);
-    } else if (incomingMessage.charAt(0) == '3'){
-      result.postValue(incomingMessage.substring(1));
+//  private void saveIncoming(String incomingMessage) {
+//    if(incomingMessage.charAt(0)=='1'){
+//      cpr.postValue(incomingMessage.substring(1));
+//      Log.d("BTConnection", "saveCPR: " + cpr);
+//    } else if (incomingMessage.charAt(0) == '3'){
+//      result.postValue(incomingMessage.substring(1));
+//    }
+//  }
 
 
-      String result = incomingMessage;
-      //if(result.contains("SPLIT")) {
-      String[] resultList = result.split("SPLIT");
-      double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
-      double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
-      //EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString()); //TODO uncomment when testing api
-      Log.d("Controller", "before saving to epj");
-      epjRepository.saveToLog(glukose, albumin, cpr.toString());
-      Log.d("BTConnection", "saveResult: " + result );
+  public LiveData<String> btMessage() {
+    if(btMessage == null) {
+      btMessage = new MutableLiveData<>();
     }
-  }
-
-  public LiveData<String> cprString() {
-    if(cpr == null) {
-      cpr = new MutableLiveData<>();
-    }
-    return cpr;
-  }
-  public LiveData<String> resultString() {
-    if(result == null) {
-      result = new MutableLiveData<>();
-    }
-    return result;
+    return btMessage;
   }
 
   public LiveData<Boolean> isBtConnected() {

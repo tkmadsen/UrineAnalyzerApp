@@ -42,6 +42,8 @@ public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
     private ObservationService obsService;
+    private Boolean obsSuccess;
+    private Boolean success;
 
 
     EPJRepository() {
@@ -73,14 +75,16 @@ public class EPJRepository implements IEPJRepository {
 
 
     @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
-    public void saveToLog(double Glukose, double Albumin, String Cpr) {
+    public boolean saveToLog(double Glukose, double Albumin, String Cpr) {
         Observation obs = createObservation(Glukose, Albumin, Cpr);
         Log.d("EPJRepository", new Gson().toJson(obs));
+        return true;
     }
 
     private static String token;
     private static String cookie;
-    public void createLoginCall(double glukose, double albumin, String cpr) {
+
+    public boolean saveResultEPJ(double glukose, double albumin, String cpr) {
         LoginEPJBody loginBody = new LoginEPJBody();
         loginBody.setCreateSession(true);
         loginBody.setPassword("sikkerhed");
@@ -96,27 +100,30 @@ public class EPJRepository implements IEPJRepository {
             @Override
             public void onResponse(Call<LoginEPJResponse> call, Response<LoginEPJResponse> response) {
                 if(response.isSuccessful()) {
+                    //Retrieving data from response from epj
                     cookie = response.headers().get("Set-Cookie");
-                    Log.d("EPJRepository", cookie);
                     token = "Bearer " + response.body().getToken();
-                    saveToEPJ(glukose, albumin, cpr);
+                    success = saveObsEPJ(glukose, albumin, cpr);
                     Log.d("EPJRepository", "Successfully retrieved token: " + token);
                 } else {
                     Log.d("EPJRepository", "Login not correct");
+                    success = false;
                 }
             }
 
             @Override
             public void onFailure(Call<LoginEPJResponse> call, Throwable t) {
                 Log.d("EPJRepository", "Failed on login");
+                success = false;
             }
         });
+        return success;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
     @Override
-    public void saveToEPJ(double Albumin, double Glukose, String Cpr) {
+    public boolean saveObsEPJ(double Albumin, double Glukose, String Cpr) {
         Observation obs = createObservation(Albumin, Glukose, Cpr);
 
         Call<Observation> call = obsService.createObservation(token, cookie, obs);
@@ -125,17 +132,21 @@ public class EPJRepository implements IEPJRepository {
             @Override
             public void onResponse(Call<Observation> call, Response<Observation> response) {
                 if (response.isSuccessful()) {
+                    obsSuccess = true;
                     Log.d("EPJRepository", "Observation created successfully");
                 } else {
                     Log.d("EPJRepository", "Error creating Observation");
+                    obsSuccess = false;
                 }
             }
 
             @Override
             public void onFailure(Call<Observation> call, Throwable t) {
                 Log.d("EPJRepository", "Error creating Observation");
+                obsSuccess = false;
             }
         });
+        return obsSuccess;
     }
 
 

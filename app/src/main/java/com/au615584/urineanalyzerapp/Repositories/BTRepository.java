@@ -10,12 +10,10 @@ public class BTRepository implements IBTRepository {
     //Instance for Singleton pattern
     private static BTRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
-    public MutableLiveData<String> state;
     private IBluetoothConnection btConnection;
 
     BTRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
-        state = new MutableLiveData<>("");
         btConnection = new BluetoothConnection();
     }
 
@@ -40,14 +38,6 @@ public class BTRepository implements IBTRepository {
         return btConnection.isBluetoothEnabled();
     }
 
-    @Override
-    public LiveData<String> state() {
-        return btConnection.fragmentState();
-    }
-
-    public LiveData<String> cpr() { return btConnection.cprString();}
-    public LiveData<String> result() {
-        return btConnection.resultString();
-    }
+    public LiveData<String> btMessage() { return btConnection.btMessage(); }
     public LiveData<Boolean> isBtConnected() { return  btConnection .isBtConnected(); }
 }

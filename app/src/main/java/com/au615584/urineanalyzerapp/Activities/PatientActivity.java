@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,34 +14,31 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import com.au615584.urineanalyzerapp.Fragments.EpjFailureFragment;
 import com.au615584.urineanalyzerapp.Fragments.GuideFragment;
 import com.au615584.urineanalyzerapp.Fragments.ProcessingFragment;
 import com.au615584.urineanalyzerapp.Fragments.ResultFragment;
+import com.au615584.urineanalyzerapp.Fragments.TestFailureFragment;
 import com.au615584.urineanalyzerapp.Fragments.WelcomeFragment;
 import com.au615584.urineanalyzerapp.Fragments.btFailFragment;
 import com.au615584.urineanalyzerapp.R;
-import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 
 public class PatientActivity extends AppCompatActivity {
 
     private Button btnTest;
     private String CPR="Default";
-    private String Result="Default";
+    private String btMessage="Default";
     private ImageButton btnPro;
     private ActivityResultLauncher<Intent> signInLauncher;
     private ActivityResultLauncher<Intent> bluetoothEnableLauncher;
     private PatientViewModel vm;
-    //private BluetoothCommunication btConnection;
-    private EPJRepository epjRepository;
 
-    @RequiresApi(api = Build.VERSION_CODES.O) //TODO needed for dateTime in observation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,29 +46,8 @@ public class PatientActivity extends AppCompatActivity {
         //btnTest=findViewById(R.id.testB);
         btnPro=findViewById(R.id.proB);
         vm= new PatientViewModel();
-        //epjRepository = EPJRepository.getInstance(); //TODO uncomment when testing api
-        //epjRepository.createLoginCall(2, 1, "0102030001");
 
-        Log.d("onCreate1 Patient Activity", "Checking if bluetooth is enabled ");
-        /*
-        if(vm.isBluetoothEnabled() == true) {
-            Log.d("onCreate2 Patient Activity", "Bluetooth is enabled");
-            vm.connectToRemoteDevice();
-        }*/
-
-        /*
-        while (vm.isBluetoothEnabled() == false) {
-            Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
-            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            bluetoothEnableLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
-                if (result.getResultCode() == 0) {
-                    Toast.makeText(this,"Turn on Bluetooth",Toast.LENGTH_SHORT).show();
-                }
-            });
-        }*/
-
-
-
+        Log.d("onCreate Patient Activity", "Checking if bluetooth is enabled ");
         signInLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result ->  {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Toast.makeText(this,"Professional view",Toast.LENGTH_SHORT).show();
@@ -84,6 +59,8 @@ public class PatientActivity extends AppCompatActivity {
         Fragment resultFragment=new ResultFragment();
         Fragment processingFragment=new ProcessingFragment();
         Fragment btFailFragment = new btFailFragment();
+        Fragment resultFailFragment = new EpjFailureFragment();
+        Fragment testFailFragment = new TestFailureFragment();
 
         //Apply default fragment
         getSupportFragmentManager().beginTransaction()
@@ -153,14 +130,27 @@ public class PatientActivity extends AppCompatActivity {
                                 .beginTransaction().replace(R.id.fraglist,processingFragment, "PROCESSING_FRAGMENT")
                                 .commit();
                         break;
+                    case "Test Failure":
+                        Log.d("PatientActivity", "ChangeState(), Received Test Failure");
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,testFailFragment, "TEST_FAILURE_FRAGMENT")
+                                .commit();
+                        break;
+                    case "Result Failure":
+                        Log.d("PatientActivity", "ChangeState(), Received Result Failure");
+                        getSupportFragmentManager()
+                                .beginTransaction().replace(R.id.fraglist,resultFailFragment, "RESULT_FAILURE_FRAGMENT")
+                                .commit();
+                        break;
                 }
             }
         });
 
-        vm.result().observe(this, new Observer<String>() {
+        vm.btMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Result = s;
+                btMessage = s;
+                vm.handleBtMessage(btMessage);
             }
         });
         /* //TODO uncomment this when testing

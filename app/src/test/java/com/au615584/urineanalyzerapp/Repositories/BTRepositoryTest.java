@@ -1,5 +1,9 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.au615584.urineanalyzerapp.Activities.PatientActivity;
@@ -10,9 +14,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -48,22 +49,22 @@ public class BTRepositoryTest {
         //assertEquals(repository.isBluetoothEnabled(), true);
     }
 
-    @Test
-    public void state() {
-        mockBtCom.cprString();
-        repository.state();
-        verify(mockBtCom, times(1)).fragmentState();
-    }
+//    @Test
+//    public void state() {
+//        mockBtCom.cprString();
+//        repository.state();
+//        verify(mockBtCom, times(1)).fragmentState();
+//    }
 
-    @Test
-    public void cpr() {
-        repository.cpr();
-        verify(mockBtCom, times(1)).cprString();
-    }
+//    @Test
+//    public void cpr() {
+//        repository.cpr();
+//        verify(mockBtCom, times(1)).cprString();
+//    }
 
-    @Test
-    public void result() {
-        repository.result();
-        verify(mockBtCom, times(1)).resultString();
-    }
+//    @Test
+//    public void result() {
+//        repository.result();
+//        verify(mockBtCom, times(1)).resultString();
+//    }
 }

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import com.au615584.urineanalyzerapp.Bluetooth.State;
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
 import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
@@ -19,6 +21,9 @@ public class Controller implements IController{
     private IEPJRepository EPJrepository;
     private IBTRepository btRepository;
     private IProRepository proRepository;
+    private State stateC;
+    public MutableLiveData<String> cpr;
+    public String resultString;
 
     //Singleton patten
     public static Controller getInstance() {
@@ -33,10 +38,12 @@ public class Controller implements IController{
         btRepository = BTRepository.getInstance();
         EPJrepository = EPJRepository.getInstance();
         proRepository = pRepository.getInstance();
+        stateC = new State();
+        resultString = null;
+        cpr = new MutableLiveData<>("Default Cpr");
     }
 
-    //ForEPJRepository
-    //public void saveToEPJ(){EPJrepository.saveToEPJ();}
+
 
     //For proRepository
     public void signIn(String pw){proRepository.SignIn(pw);}
@@ -47,32 +54,59 @@ public class Controller implements IController{
         return proRepository.isSignedIn();
     }
 
+
     //For btRepository
     public void connectToRemoteDevice(){btRepository.connectToRemoteDevice();}
     public boolean isBluetoothEnabled(){return btRepository.isBluetoothEnabled();}
-    public LiveData<String> state() { return btRepository.state(); }
-    public LiveData<String> cpr(){return btRepository.cpr();}
     public LiveData<Boolean> isBtConnected(){ return btRepository.isBtConnected();}
+    public LiveData<String> fragmentState() { return stateC.lState(); }
 
-    public LiveData<String> result(){
-        //sendResultToEPJ();
-        Log.d("Controller", "result received");
-        return btRepository.result();
+    public LiveData<String> btMessage(){
+        return btRepository.btMessage();
     }
 
+    public void handleBtMessage(String incomingMessage) {
+        if(incomingMessage != "") {
+            if(incomingMessage.charAt(0)=='1'){
+                cpr.postValue(incomingMessage.substring(1));
+                Log.d("Controller", "saveCPR: " + cpr);
+            } else if (incomingMessage.charAt(0) == '3'){
+                String result = incomingMessage.substring(1);
+                if(result.equals("Fejl på test")) {
+                    incomingMessage = "TestFejl";
+                } else {
+                    sendResultToEPJ(incomingMessage.substring(1), cpr.getValue());
+                }
+            }
+            stateC.changeState(incomingMessage);
+            Log.d("handleBtMessage", "Incomingmessage: " + incomingMessage);
+        }
+    }
+    public LiveData<String> cpr() {
+        if(cpr == null) {
+            cpr = new MutableLiveData<>();
+        }
+        return cpr;
+    }
+
+
     //For EPJRepository
-    public void sendResultToEPJ(){
-        String result = btRepository.result().toString();
-        //if(result.contains("SPLIT")) {
-        String[] resultList = result.split("SPLIT");
-        double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
-        double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
-            //EPJrepository.saveToEPJ(glukose, albumin, btRepository.cpr().toString()); //TODO uncomment when testing api
-        Log.d("Controller", "before saving to epj");
-        EPJrepository.saveToLog(glukose, albumin, cpr().getValue());
-        Log.d("Controller", "after saving to epj");
-        //} else {
-        //    Log.d("Controller", "Fail on test");
-        //}
+    public void sendResultToEPJ(String result, String Cpr){
+        if(result.contains(",")) {
+            String[] resultList = result.split(",");
+            double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
+            double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
+            Log.d("Controller", "before saving to epj, msg: " + result);
+            //boolean EPJSuccess = EPJrepository.saveResultEPJ(glukose, albumin, Cpr); //TODO uncomment when testing api
+            boolean EPJsuccess = EPJrepository.saveToLog(glukose, albumin, Cpr);
+            if (EPJsuccess) {
+                stateC.changeState("S");
+            } else {
+                stateC.changeState("F");
+            }
+            Log.d("Controller", "after saving to epj");
+        } else {
+            Log.d("Controller", "Fail on test");
+        }
     }
 }

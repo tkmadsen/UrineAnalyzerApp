@@ -22,4 +22,6 @@
     <string name="correctTestTXt">Resultat modtaget</string>
     <string name="ProgressTxt">Analyserer</string>
   <string name="btErrorTxt">Der skete en fejl. Venligst tilkald hjælp.</string>
+  <string name="resultFailTxt">Sending data failed. Please take the test again</string>
+    <string name="testFailTxt">The test failed. Please take a new one.</string>
 </resources>

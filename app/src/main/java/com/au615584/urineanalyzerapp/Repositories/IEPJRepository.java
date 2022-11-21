@@ -2,6 +2,7 @@ package com.au615584.urineanalyzerapp.Repositories;
 
 public interface IEPJRepository {
 
-    void saveToEPJ(double Glukose, double Albumin, String Cpr);
-    void saveToLog(double Glukose, double Albumin, String Cpr);
+    boolean saveToLog(double glucosis, double albumin, String Cpr);
+    boolean saveResultEPJ(double glucosis, double albumin, String Cpr);
+    boolean saveObsEPJ(double glucosis, double albumin, String Cpr);
 }

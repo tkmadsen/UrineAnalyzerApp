@@ -23,4 +23,6 @@
   <string name="cprTB" translatable="false" />
   <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
   <string name="btErrorTxt">An error has occurred. Please ask for help.</string>
+  <string name="resultFailTxt">Sending data failed. Please take the test again</string>
+  <string name="testFailTxt">The test failed. Please take a new one.</string>
 </resources>

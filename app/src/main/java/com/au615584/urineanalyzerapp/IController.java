@@ -14,12 +14,11 @@ public interface IController {
     void connectToRemoteDevice();
 
     boolean isBluetoothEnabled();
+    void handleBtMessage(String incomingMessage);
 
-    LiveData<String> state();
-
+    LiveData<String> btMessage();
+    LiveData<String> fragmentState();
     LiveData<String> cpr();
-    LiveData<String> result();
-
     LiveData<Boolean> isBtConnected();
 
     void setLocal(Activity activity, String langCode);

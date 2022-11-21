@@ -1,8 +1,11 @@
 package com.au615584.urineanalyzerapp.Bluetooth;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+
+import com.au615584.urineanalyzerapp.Controller;
+import com.au615584.urineanalyzerapp.IController;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,10 +13,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class StateTest {
@@ -21,11 +20,11 @@ public class StateTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private State state;
-    private IBluetoothConnection mockbtCon;
+    private IController mockController;
     @Before
     public void setUp() throws Exception {
-        mockbtCon=mock(BluetoothConnection.class);
-        state=new State(mockbtCon);
+        mockController=mock(Controller.class);
+        state=new State(mockController);
     }
 
     @After

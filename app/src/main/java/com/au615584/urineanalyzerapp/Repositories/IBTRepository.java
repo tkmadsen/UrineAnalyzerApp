@@ -7,9 +7,6 @@ public interface IBTRepository {
 
     boolean isBluetoothEnabled();
 
-    LiveData<String> state();
-    LiveData<String> cpr();
-
-    LiveData<String> result();
+    LiveData<String> btMessage();
     LiveData<Boolean> isBtConnected();
 }

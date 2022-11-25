@@ -18,7 +18,7 @@
     <string name="errorInvalidPassword">Forkert kode</string>
     <string name="errorUserSignIn">Login fejlede</string>
     <string name="guide2Txt">3. Dub stix med papir</string>
-    <string name="guide3Txt">4. Placer urinstix i åbningen til venstre på toppen af apparatet. Giv slip når den grønne lampe lyser. </string>
+    <string name="guide3Txt">4. Placer urinstix i åbningen til venstre på toppen af apparatet. Giv slip når den grønne lampe lyser.  </string>
     <string name="correctTestTXt">Resultat modtaget</string>
     <string name="ProgressTxt">Analyserer</string>
   <string name="btErrorTxt">Der skete en fejl. Venligst tilkald hjælp.</string>

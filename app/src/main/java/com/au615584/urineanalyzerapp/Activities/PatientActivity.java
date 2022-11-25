@@ -32,7 +32,7 @@ import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 public class PatientActivity extends AppCompatActivity {
 
     private Button btnTest;
-    private String CPR="Default";
+    public String CPR="Default";
     private String btMessage="Default";
     private ImageButton btnPro;
     private ActivityResultLauncher<Intent> signInLauncher;

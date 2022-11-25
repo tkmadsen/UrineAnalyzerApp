@@ -15,7 +15,7 @@
   <string name="errorInvalidPassword">Invalid password</string>
   <string name="errorUserSignIn">Login failed</string>
   <string name="guide2Txt">3. Dab stix with paper</string>
-  <string name="guide3Txt">4. Place urine stix in opening on the left side of the device and wait for stix to be fastened by the device</string>
+  <string name="guide3Txt">4. Place urine stix in opening on the left side of the device. Let go when the green light is turned on.</string>
   <string name="correctTestTXt">Result received</string>
   <string name="backBtn">Back</string>
   <string name="CPRdialog">Welcome 2103971554</string>

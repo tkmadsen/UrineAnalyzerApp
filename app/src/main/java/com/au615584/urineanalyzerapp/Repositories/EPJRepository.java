@@ -42,8 +42,8 @@ public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
     private ObservationService obsService;
-    private Boolean obsSuccess;
-    private Boolean success;
+    private boolean obsSuccess;
+    private boolean success;
 
 
     EPJRepository() {
@@ -51,6 +51,8 @@ public class EPJRepository implements IEPJRepository {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        obsSuccess = true;
+        success = true;
 
 
         //Creating observationService
@@ -85,6 +87,7 @@ public class EPJRepository implements IEPJRepository {
     private static String cookie;
 
     public boolean saveResultEPJ(double glukose, double albumin, String cpr) {
+
         LoginEPJBody loginBody = new LoginEPJBody();
         loginBody.setCreateSession(true);
         loginBody.setPassword("sikkerhed");
@@ -125,6 +128,7 @@ public class EPJRepository implements IEPJRepository {
     @Override
     public boolean saveObsEPJ(double Albumin, double Glukose, String Cpr) {
         Observation obs = createObservation(Albumin, Glukose, Cpr);
+        Log.d("EPJRepository", new Gson().toJson(obs));
 
         Call<Observation> call = obsService.createObservation(token, cookie, obs);
 
@@ -267,10 +271,10 @@ public class EPJRepository implements IEPJRepository {
         //Creating second extension
         Extension extension2 = new Extension();
         extension2.setUrl("http://columnafhir.dk/x/ColumnaActivityResult-effective-date-time");
-        extension2.setValueDateTime("2022-11-08T13:17:00.000+01:00");
+        extension2.setValueDateTime("2022-11-24T11:14:00.000+01:00");
         //extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00"); //TODO tjek med denne
 
-        //Adding extenions to list of extions and adding to observation
+        //Adding extenions to list of extentions and adding to observation
         extensionList.add(extension1);
         extensionList.add(extension2);
         obs.setExtension(extensionList);

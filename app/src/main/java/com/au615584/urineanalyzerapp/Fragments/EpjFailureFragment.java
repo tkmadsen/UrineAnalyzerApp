@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,7 +23,9 @@ public class EpjFailureFragment extends Fragment {
   }
 
   public EpjFailureFragment(String Result) {
+    Log.d("EpjFailureFragment", Result);
     result = Result.substring(1);
+    Log.d("EpjFailureFragment", result);
   }
 
 
@@ -38,7 +41,7 @@ public class EpjFailureFragment extends Fragment {
                            Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_epj_failure, container, false);
     txtResult = v.findViewById(R.id.resultsTxt);
-    txtResult.setText(result);
-    return inflater.inflate(R.layout.fragment_epj_failure, container, false);
+    txtResult.setText("" + result);
+    return v;
   }
 }

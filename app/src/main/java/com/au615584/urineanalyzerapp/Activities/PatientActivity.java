@@ -138,6 +138,7 @@ public class PatientActivity extends AppCompatActivity {
                     case "Result Failure":
                         Log.d("PatientActivity", "ChangeState(), Received Result Failure");
                         EpjFailureFragment epjFailureFragment = new EpjFailureFragment(btMessage);
+                        Log.d("PatientActivity", btMessage);
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,epjFailureFragment, "EPJ_FAILURE_FRAGMENT")
                                 .commit();

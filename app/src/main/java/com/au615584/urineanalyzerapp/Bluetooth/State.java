@@ -37,7 +37,7 @@ public class State {
 //                break;
                 case '4':
                     state.postValue("Welcome");
-                    Log.d("State", "ChangeState(), Received 5");
+                    Log.d("State", "ChangeState(), Received 4");
                     break;
                 case 'S':
                     state.postValue("Result");
@@ -53,19 +53,19 @@ public class State {
                     break;
                 default:
                     state.postValue("Welcome");
-                    Log.d("State", "ChangeState(), default");
+                    Log.d("State", "ChangeState(), Welcome, default");
 
             }
         } else {
             state.postValue("Welcome");
-            Log.d("State", "ChangeState(), default");
+            Log.d("State", "ChangeState(), statechar is null");
         }
     }
 
     public Character formatStateMessage(String stateMessage) {
         Character stateChar;
         stateChar = stateMessage.charAt(0);
-        Log.d("State", "stateMessage: " + stateMessage + "stateChar: " + stateChar);
+        Log.d("State", "In formatStateMessage: stateMessage: " + stateMessage + " stateChar: " + stateChar);
 
         return stateChar;
     }

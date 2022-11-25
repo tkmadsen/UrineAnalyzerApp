@@ -17,15 +17,19 @@
       android:layout_height="wrap_content"
       android:text="@string/resultFailTxt"
       android:textSize="48sp"
-      tools:layout_editor_absoluteX="149dp"
-      tools:layout_editor_absoluteY="474dp" />
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
       android:id="@+id/resultLabel"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="24dp"
       android:text="@string/resultLabel"
       android:textSize="48sp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toStartOf="@+id/TestFailTxt"
       app:layout_constraintTop_toBottomOf="@+id/TestFailTxt" />
 
@@ -33,7 +37,10 @@
       android:id="@+id/resultsTxt"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginBottom="24dp"
+      android:text="Result"
       android:textSize="48sp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="@+id/TestFailTxt"
       app:layout_constraintStart_toEndOf="@+id/resultLabel"
       app:layout_constraintTop_toBottomOf="@+id/TestFailTxt" />

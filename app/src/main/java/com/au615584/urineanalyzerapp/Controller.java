@@ -24,6 +24,7 @@ public class Controller implements IController{
     private State stateC;
     public MutableLiveData<String> cpr;
     public String resultString;
+    private Boolean epjSucces;
 
     //Singleton patten
     public static Controller getInstance() {
@@ -41,6 +42,7 @@ public class Controller implements IController{
         stateC = new State();
         resultString = null;
         cpr = new MutableLiveData<>("Default Cpr");
+        epjSucces = false;
     }
 
 
@@ -75,7 +77,12 @@ public class Controller implements IController{
                 if(result.equals("Fejl på test")) {
                     incomingMessage = "TestFejl";
                 } else {
-                    sendResultToEPJ(incomingMessage.substring(1), cpr.getValue());
+                    Boolean epjSucces = sendResultToEPJ(incomingMessage.substring(1), cpr.getValue());
+                    if (epjSucces) {
+                        incomingMessage = "S";
+                    } else {
+                        incomingMessage = "F";
+                    }
                 }
             }
             stateC.changeState(incomingMessage);
@@ -91,22 +98,22 @@ public class Controller implements IController{
 
 
     //For EPJRepository
-    public void sendResultToEPJ(String result, String Cpr){
+    public boolean sendResultToEPJ(String result, String Cpr){
+        Log.d("Controller", "Result before split: " + result);
         if(result.contains(",")) {
             String[] resultList = result.split(",");
-            double glukose = Double.parseDouble(resultList[0].substring(resultList[0].length()));
-            double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()));
+            Log.d("Controller", resultList[0].substring(resultList[0].length()-1));
+            Double glucosis = Double.parseDouble (resultList[0].substring(resultList[0].length()-1));
+            Double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()-1));
+
             Log.d("Controller", "before saving to epj, msg: " + result);
-            //boolean EPJSuccess = EPJrepository.saveResultEPJ(glukose, albumin, Cpr); //TODO uncomment when testing api
-            boolean EPJsuccess = EPJrepository.saveToLog(glukose, albumin, Cpr);
-            if (EPJsuccess) {
-                stateC.changeState("S");
-            } else {
-                stateC.changeState("F");
-            }
+            boolean EPJSuccess = EPJrepository.saveResultEPJ(glucosis, albumin, Cpr); //TODO uncomment when testing api
+            //boolean EPJSuccess = EPJrepository.saveToLog(glucosis, albumin, Cpr);
             Log.d("Controller", "after saving to epj");
+            return EPJSuccess;
         } else {
             Log.d("Controller", "Fail on test");
+            return false;
         }
     }
 }

@@ -25,7 +25,7 @@ public class EpjFailureFragment extends Fragment {
   public EpjFailureFragment(String Result) {
     Log.d("EpjFailureFragment", Result);
     result = Result.substring(1);
-    Log.d("EpjFailureFragment", result);
+    Log.d("EpjFailureFragment", "Result: " + result);
   }
 
 

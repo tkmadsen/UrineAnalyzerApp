@@ -7,14 +7,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.au615584.urineanalyzerapp.IController;
 
-public class State {
+public class State implements IState{
     public MutableLiveData<String> state;
     public IController controller;
 
     public State() {
         state = new MutableLiveData<>("Welcome");
     }
-    public State(IController controller){this.controller=controller;}
+    public State(IController controller){this.controller=controller; state = new MutableLiveData<>("Welcome");}
 
 
     public void changeState(String stateMessage) {

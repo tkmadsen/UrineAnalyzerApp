@@ -13,22 +13,21 @@ import com.au615584.urineanalyzerapp.Constants;
 
 import java.util.Locale;
 
-public class pRepository implements IProRepository{
+public class ProRepository implements IProRepository{
     //Instance for Singleton pattern
-    private static pRepository instance;
+    private static ProRepository instance;
     public MutableLiveData<Boolean> isUserSignedIn;
-    private BluetoothConnection btConnection;
 
-    pRepository() {
+
+    ProRepository() {
         isUserSignedIn = new MutableLiveData<>(false);
-        btConnection = new BluetoothConnection();
     }
 
     //Singleton patten
-    public static pRepository getInstance() {
+    public static ProRepository getInstance() {
 
         if (instance == null) {
-            instance = new pRepository();
+            instance = new ProRepository();
         }
         return instance;
     }

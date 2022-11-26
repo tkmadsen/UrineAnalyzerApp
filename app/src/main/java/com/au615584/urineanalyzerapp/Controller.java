@@ -6,13 +6,14 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.au615584.urineanalyzerapp.Bluetooth.IState;
 import com.au615584.urineanalyzerapp.Bluetooth.State;
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
 import com.au615584.urineanalyzerapp.Repositories.EPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IBTRepository;
 import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
-import com.au615584.urineanalyzerapp.Repositories.pRepository;
+import com.au615584.urineanalyzerapp.Repositories.ProRepository;
 
 
 public class Controller implements IController{
@@ -21,10 +22,8 @@ public class Controller implements IController{
     private IEPJRepository EPJrepository;
     private IBTRepository btRepository;
     private IProRepository proRepository;
-    private State stateC;
+    private IState stateC;
     public MutableLiveData<String> cpr;
-    public String resultString;
-    private Boolean epjSucces;
 
     //Singleton patten
     public static Controller getInstance() {
@@ -38,11 +37,16 @@ public class Controller implements IController{
     public Controller() {
         btRepository = BTRepository.getInstance();
         EPJrepository = EPJRepository.getInstance();
-        proRepository = pRepository.getInstance();
+        proRepository = ProRepository.getInstance();
         stateC = new State();
-        resultString = null;
         cpr = new MutableLiveData<>("Default Cpr");
-        epjSucces = false;
+    }
+    public Controller(IState state,IProRepository proRepo, IEPJRepository epjRepo, IBTRepository btRepo) {
+        btRepository=btRepo;
+        EPJrepository=epjRepo;
+        proRepository=proRepo;
+        stateC=state;
+        cpr = new MutableLiveData<>("Default Cpr");
     }
 
 

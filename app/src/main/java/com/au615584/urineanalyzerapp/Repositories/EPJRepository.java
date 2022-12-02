@@ -90,11 +90,11 @@ public class EPJRepository implements IEPJRepository {
 
         LoginEPJBody loginBody = new LoginEPJBody();
         loginBody.setCreateSession(true);
-        loginBody.setPassword("sikkerhed");
+        loginBody.setPassword("XXX"); //For safety reasons Security PrincipalID and password has been removed, as they are used internally in Systematic
         loginBody.setRole("Udvikler");
         loginBody.setTokenLifeTime(60000);
-        loginBody.setUnit("72.09.03.1"); //TODO what to set?
-        loginBody.setSecurityPrincipalId("sp-gud"); //TODO what to set?
+        loginBody.setUnit("72.09.03.1");
+        loginBody.setSecurityPrincipalId("XXX"); //For safety reasons Security PrincipalID and password has been removed, as they are used internally in Systematic
 
         Call<LoginEPJResponse> call = obsService.login(loginBody);
 

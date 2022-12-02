@@ -2,10 +2,8 @@ package com.au615584.urineanalyzerapp.Activities;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -66,10 +63,8 @@ public class PatientActivity extends AppCompatActivity {
                 .replace(R.id.fraglist, welcomeFragment, "WELCOME_FRAGMENT")
                 .commitNow();
 
-
         if(vm.isBluetoothEnabled()) {
             vm.connectToRemoteDevice();
-            //btConnection.write("Hej RPi");
         } else {
             Log.d("onCreate2 Patient Activity", "Bluetooth not enabled connected");
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -87,7 +82,6 @@ public class PatientActivity extends AppCompatActivity {
             }
         });
 
-
         vm.isBtConnedted().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -96,6 +90,14 @@ public class PatientActivity extends AppCompatActivity {
                             beginTransaction().replace(R.id.fraglist, btFailFragment, "BTFAIL_FRAGMENT")
                             .commit();
                 }
+            }
+        });
+
+        vm.btMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                btMessage = s;
+                vm.handleBtMessage(btMessage);
             }
         });
 
@@ -112,7 +114,6 @@ public class PatientActivity extends AppCompatActivity {
                     case "Guide":
                         Log.d("PatientActivity", "ChangeState(), Received Guide");
                         Fragment guideFragment = new GuideFragment(CPR);
-                        //showDialogue();
                         getSupportFragmentManager()
                                 .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
                                 .commit();
@@ -146,14 +147,6 @@ public class PatientActivity extends AppCompatActivity {
                 }
             }
         });
-
-        vm.btMessage().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                btMessage = s;
-                vm.handleBtMessage(btMessage);
-            }
-        });
         /* //TODO uncomment this when testing
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,32 +178,12 @@ public class PatientActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(PatientActivity.this, LoginActivity.class);
                 signInLauncher.launch(myIntent);
-                finish();
             }
         });
     }
-    public void showDialogue(){
-        //create a dialogue popup - and show it
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle(R.string.welcome).setMessage(CPR);
-        final AlertDialog alert = dialog.create();
-        alert.show();
 
-        // Hide after some seconds
-        final Handler handler  = new Handler();
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (alert.isShowing()) {
-                    alert.dismiss();
-                }
-            }
-        };
-        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                handler.removeCallbacks(runnable);
-            }
-        });
-        handler.postDelayed(runnable, 3000);
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

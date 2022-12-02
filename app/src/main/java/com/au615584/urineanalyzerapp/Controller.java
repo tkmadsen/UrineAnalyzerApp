@@ -107,8 +107,8 @@ public class Controller implements IController{
             Double albumin = Double.parseDouble(resultList[1].substring(resultList[1].length()-1));
 
             Log.d("Controller", "before saving to epj, msg: " + result);
-            boolean EPJSuccess = EPJrepository.saveResultEPJ(glucosis, albumin, Cpr); //TODO uncomment when testing api
-            //boolean EPJSuccess = EPJrepository.saveToLog(glucosis, albumin, Cpr);
+            //boolean EPJSuccess = EPJrepository.saveResultEPJ(glucosis, albumin, Cpr); //TODO uncomment when testing api
+            boolean EPJSuccess = EPJrepository.saveToLog(glucosis, albumin, Cpr);
             Log.d("Controller", "after saving to epj");
             return EPJSuccess;
         } else {

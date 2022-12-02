@@ -68,8 +68,10 @@ public class pRepository implements IProRepository{
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
-
     }
+
+
+
 
     @Override
     public void setStixType(Activity act, String type) {

@@ -69,7 +69,7 @@ public class StateTest {
 
     @Test
     public void changeState3() {
-        state.changeState("3234564343455");
+        state.changeState("S3234564343455");
         Assert.assertEquals("Result",state.state.getValue());
 
     }
@@ -82,6 +82,29 @@ public class StateTest {
     }
 
     @Test
-    public void lState() {
+    public void changeState5() {
+        state.changeState("F3234564343455");
+        Assert.assertEquals("Result Failure",state.state.getValue());
+
+    }
+
+    @Test
+    public void changeState6() {
+        state.changeState("TF3234564343455");
+        Assert.assertEquals("Test Failure",state.state.getValue());
+
+    }
+
+    @Test
+    public void formatStateMessage1() {
+        Character actual = state.formatStateMessage("Tshsjk");
+        Character expected ='T';
+        Assert.assertEquals(expected,actual);
+    }
+    @Test
+    public void formatStateMessage2() {
+        Character actual = state.formatStateMessage("3kshsjk");
+        Character expected ='3';
+        Assert.assertEquals(expected,actual);
     }
 }

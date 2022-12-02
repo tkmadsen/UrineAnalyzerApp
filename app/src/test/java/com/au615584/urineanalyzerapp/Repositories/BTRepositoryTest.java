@@ -46,25 +46,5 @@ public class BTRepositoryTest {
     public void isBluetoothEnabled() {
         repository.isBluetoothEnabled();
         verify(mockBtCom, times(1)).isBluetoothEnabled();
-        //assertEquals(repository.isBluetoothEnabled(), true);
     }
-
-//    @Test
-//    public void state() {
-//        mockBtCom.cprString();
-//        repository.state();
-//        verify(mockBtCom, times(1)).fragmentState();
-//    }
-
-//    @Test
-//    public void cpr() {
-//        repository.cpr();
-//        verify(mockBtCom, times(1)).cprString();
-//    }
-
-//    @Test
-//    public void result() {
-//        repository.result();
-//        verify(mockBtCom, times(1)).resultString();
-//    }
 }

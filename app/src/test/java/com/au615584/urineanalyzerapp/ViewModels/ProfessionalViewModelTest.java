@@ -39,6 +39,4 @@ public class ProfessionalViewModelTest {
         professionalViewModel.SetLocal(act,"da");
         verify(mockController, times(1)).setLocal(act,"da");
     }
-
-
 }

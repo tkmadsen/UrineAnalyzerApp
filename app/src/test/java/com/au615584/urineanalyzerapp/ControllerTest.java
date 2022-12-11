@@ -96,7 +96,7 @@ public class ControllerTest {
 
 
     @Test
-    public void handleBtMessage() {
+    public void handleBtMessage_Input1CPR_ChangestateCalled() {
         controller.handleBtMessage("11122331234");
         Assert.assertEquals("1122331234",controller.cpr.getValue());
         verify(mockState, times(1)).changeState("11122331234");
@@ -104,14 +104,14 @@ public class ControllerTest {
     }
 
     @Test
-    public void handleBtMessage1() {
+    public void handleBtMessage_Input3Result_ChangestateCalled() {
         controller.handleBtMessage("3glu: 0,pro: 0");
         Assert.assertEquals("Default Cpr",controller.cpr.getValue());
         verify(mockState, times(1)).changeState("F");
     }
 
     @Test
-    public void handleBtMessage2() {
+    public void handleBtMessage_Input1CPR_ChangestateCalledWithTestfejl() {
         controller.handleBtMessage("3Fejl på test");
         Assert.assertEquals("Default Cpr",controller.cpr.getValue());
         verify(mockState, times(1)).changeState("TestFejl");
@@ -120,18 +120,18 @@ public class ControllerTest {
     @Test
     public void sendResultToEPJ() {
         controller.sendResultToEPJ("3glu: 0,pro: 0","1122331234");
-        verify(mockEPJRepo, times(1)).saveResultEPJ(0,0,"1122331234");
+        verify(mockEPJRepo, times(1)).saveToLog(0,0,"1122331234");
     }
 
     @Test
     public void sendResultToEPJ1() {
         controller.sendResultToEPJ("3glu: +2,pro: +3","1122331234");
-        verify(mockEPJRepo, times(1)).saveResultEPJ(2,3,"1122331234");
+        verify(mockEPJRepo, times(1)).saveToLog(2,3,"1122331234");
     }
 
     @Test
     public void sendResultToEPJ2() {
-        controller.sendResultToEPJ("3glu: +2 pro +3","1122331234");
-        verify(mockEPJRepo, times(0)).saveResultEPJ(2,3,"1122331234");
+        controller.sendResultToEPJ("Fejl på test","1122331234");
+        verify(mockEPJRepo, times(0)).saveToLog(2,3,"1122331234");
     }
 }

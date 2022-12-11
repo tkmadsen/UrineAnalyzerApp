@@ -1,7 +1,5 @@
 package com.au615584.urineanalyzerapp.Repositories;
 
-import static org.junit.Assert.*;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import org.junit.After;
@@ -28,14 +26,14 @@ public class proRepositoryTest {
     }
 
     @Test
-    public void signIn() {
+    public void signIn_Correctinput_ExpectedTrue() {
         proRepository.SignIn("1234");
         Boolean expected = true;
         Boolean actual = proRepository.isUserSignedIn.getValue();
         Assert.assertEquals(expected,actual);
     }
     @Test
-    public void signIn1() {
+    public void signIn_WrongInput_ExpectedFalse() {
         proRepository.SignIn("2234");
         Boolean expected = false;
         Boolean actual = proRepository.isUserSignedIn.getValue();

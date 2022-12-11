@@ -45,12 +45,4 @@ public class PatientViewModelTest {
         patientViewModel.isBluetoothEnabled();
         verify(mockController, times(1)).isBluetoothEnabled();
     }
-
-//    @Test
-//    public void state() {
-//        patientViewModel.state();
-//        verify(mockController, times(1)).state();
-//    }
-
-
 }

@@ -1,10 +1,11 @@
 package com.au615584.urineanalyzerapp.Bluetooth;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+
+import com.au615584.urineanalyzerapp.Controller;
+import com.au615584.urineanalyzerapp.IController;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -13,17 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.stubbing.OngoingStubbing;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import com.au615584.urineanalyzerapp.Controller;
-import com.au615584.urineanalyzerapp.IController;
-
-import java.util.Observable;
 
 @RunWith(JUnit4.class)
 public class StateTest {
@@ -37,7 +27,6 @@ public class StateTest {
     @Before
     public void setUp() throws Exception {
         mockbtCon=mock(BluetoothConnection.class);
-        //state=new State();
         mockController=mock(Controller.class);
         state=new State(mockController);
     }
@@ -47,12 +36,12 @@ public class StateTest {
     }
 
     @Test
-    public void changeState() {
+    public void changeState_input8_ExpectedDefault() {
         state.changeState("8234564343455");
         Assert.assertEquals("Welcome",state.state.getValue());
     }
     @Test
-    public void changeState1() {
+    public void changeState_Input1_ExpetedGuide() {
 
         state.changeState("1234564343455");
         Assert.assertEquals("Guide",state.state.getValue());
@@ -60,7 +49,7 @@ public class StateTest {
     }
 
     @Test
-    public void changeState2() {
+    public void changeState_Input2_ExpectedAnalyzing() {
 
         state.changeState("2234564343455");
         Assert.assertEquals("Analyzing",state.state.getValue());
@@ -68,41 +57,41 @@ public class StateTest {
     }
 
     @Test
-    public void changeState3() {
+    public void changeState_Input3_ExpectedResult() {
         state.changeState("S3234564343455");
         Assert.assertEquals("Result",state.state.getValue());
 
     }
 
     @Test
-    public void changeState4() {
+    public void changeState_Input4_ExpectedWelcome() {
 
         state.changeState("4234564343455");
         Assert.assertEquals("Welcome",state.state.getValue());
     }
 
     @Test
-    public void changeState5() {
+    public void changeState_InputF_ExpectedResultFailure() {
         state.changeState("F3234564343455");
         Assert.assertEquals("Result Failure",state.state.getValue());
 
     }
 
     @Test
-    public void changeState6() {
+    public void changeState_InputT_ExpectedTestFailure() {
         state.changeState("TF3234564343455");
         Assert.assertEquals("Test Failure",state.state.getValue());
 
     }
 
     @Test
-    public void formatStateMessage1() {
+    public void formatStateMessage_ExpectedT() {
         Character actual = state.formatStateMessage("Tshsjk");
         Character expected ='T';
         Assert.assertEquals(expected,actual);
     }
     @Test
-    public void formatStateMessage2() {
+    public void formatStateMessage_Expected3() {
         Character actual = state.formatStateMessage("3kshsjk");
         Character expected ='3';
         Assert.assertEquals(expected,actual);

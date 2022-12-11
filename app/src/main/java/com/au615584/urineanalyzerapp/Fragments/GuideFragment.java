@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
 
+//Shows guide fragment to user when receiving "1"+Cpr from UrineAnalyzerController.
 public class GuideFragment extends Fragment {
     private TextView txtGuide, txtCpr;
     private ImageView imgGuide;
@@ -39,6 +40,7 @@ public class GuideFragment extends Fragment {
         txtCpr = v.findViewById(R.id.cprTB);
         txtCpr.setText("Velkommen " + cpr);
 
+        //Removes the CPR on the guide after 3 seconds.
         Runnable delayedTask = new Runnable() {
             @Override
             public void run() {
@@ -50,7 +52,4 @@ public class GuideFragment extends Fragment {
         return  v;
     }
 
-    public void removeCpr() {
-        txtCpr.setText("");
-    }
 }

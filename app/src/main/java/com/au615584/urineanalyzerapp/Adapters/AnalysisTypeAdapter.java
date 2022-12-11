@@ -15,6 +15,7 @@ import com.au615584.urineanalyzerapp.R;
 
 import java.util.ArrayList;
 
+//This is a custom implementation of the RecyclerView.Adaptor class that handles a list of analysistypes objects
 public class AnalysisTypeAdapter extends RecyclerView.Adapter<AnalysisTypeAdapter.AnalysisTypeViewHolder>{
 
     //interface for handling when and Person item is clicked in various ways
@@ -82,7 +83,6 @@ public class AnalysisTypeAdapter extends RecyclerView.Adapter<AnalysisTypeAdapte
             super(itemView);
 
             //get references from the layout file
-            //imgIcon = itemView.findViewById(R.id.imgLan);
             txtType = itemView.findViewById(R.id.txtAnalysisType);
             btnChooseType = itemView.findViewById(R.id.btnChooseType);
             listener = analysisTypeItemClickedListener;

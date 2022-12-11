@@ -15,7 +15,7 @@ import com.au615584.urineanalyzerapp.R;
 
 import java.util.ArrayList;
 
-//Custom implementation of the RecyclerView.Adaptor class that handles a list of Person objects
+//This is a custom implementation of the RecyclerView.Adaptor class that handles a list of language objects
 public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.LanguageViewHolder> {
 
     //interface for handling when and Person item is clicked in various ways

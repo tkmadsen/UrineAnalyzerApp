@@ -3,6 +3,8 @@ package com.au615584.urineanalyzerapp.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+//The GSON object of the response from the EPJ-server from LoginActivity.
+//Here token is used for authentication
 public class LoginEPJResponse {
 
   @SerializedName("token")
@@ -11,7 +13,7 @@ public class LoginEPJResponse {
   @SerializedName("tokenExpiry")
   @Expose
   private Long tokenExpiry;
-  @SerializedName("online") //TODO set as deprecated
+  @SerializedName("online")
   @Expose
   private Boolean online;
   @SerializedName("isSystemUser")

@@ -1,12 +1,5 @@
 package com.au615584.urineanalyzerapp.Activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,17 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.au615584.urineanalyzerapp.Adapters.AnalysisTypeAdapter;
 import com.au615584.urineanalyzerapp.Adapters.LanguageAdapter;
 import com.au615584.urineanalyzerapp.Model.AnalysisType;
 import com.au615584.urineanalyzerapp.Model.Language;
 import com.au615584.urineanalyzerapp.R;
 import com.au615584.urineanalyzerapp.ViewModels.ProfessionalViewModel;
-
 import java.util.ArrayList;
 
-public class ProfessionalAcitivity extends AppCompatActivity implements LanguageAdapter.ILanguageItemClickedListener, AnalysisTypeAdapter.IAnalysisTypeItemClickedListener {
-    //data (should probably come from a ViewModel)
+//This activity controls the settings-view used by clinicians.
+//In this view the clinician can change language and analysistype
+public class ProfessionalActivity extends AppCompatActivity implements LanguageAdapter.ILanguageItemClickedListener, AnalysisTypeAdapter.IAnalysisTypeItemClickedListener {
     private ArrayList<Language> languages;
     private ArrayList<AnalysisType> types;
     private RecyclerView rcvLanList, rcvTypeList;
@@ -110,12 +109,13 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
         activity.finish();
     }
 
-
+    //This method is not implemented in this project.
     @Override
     public void onAnalysisItemClicked(int index) {
         setAnalysisType(types.get(index));
     }
 
+    //This method is not implemented in this project.
     private void setAnalysisType(AnalysisType analysisType) {
         //create a dialogue popup - and show it
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
@@ -124,6 +124,7 @@ public class ProfessionalAcitivity extends AppCompatActivity implements Language
         builder.create().show();
     }
 
+    //This method is not implemented in this project.
     @Override
     public void ChooseAnalysisType(AnalysisType analysisType) {
         setAnalysisType(analysisType);

@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.au615584.urineanalyzerapp.R;
 
 
+//WelcomeFragment is the default fragment shown when the app are opened. Is shown again when receiving
+// #4Welcome" from the UrineAnalyzerController and the test sequence can start over.
 public class WelcomeFragment extends Fragment {
     private TextView txtWelcome;
     private TextView txtScan;

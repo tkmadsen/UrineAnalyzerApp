@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
 
+//Is shown in case of bluetooth error
 public class btFailFragment extends Fragment {
 
 

@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.au615584.urineanalyzerapp.IController;
 
+//State maintains the state of the system depending on the bluetooth-Messages received from
+// UrineAnalyzerController. Makes sure that the UrineAnalyzerApp state matches the state on
+//UrineAnalyzerController.
 public class State implements IState{
     public MutableLiveData<String> state;
     public IController controller;
@@ -31,10 +34,6 @@ public class State implements IState{
                     state.postValue("Analyzing");
                     Log.d("State", "ChangeState(), Received 2");
                     break;
-//            case '3':
-//                state.postValue("Result");
-//               Log.d("State", "ChangeState(), Received 3");
-//                break;
                 case '4':
                     state.postValue("Welcome");
                     Log.d("State", "ChangeState(), Received 4");
@@ -62,6 +61,10 @@ public class State implements IState{
         }
     }
 
+    //Formats statemessage to find the first char of the messages
+    //Ints represents messages send from UrineAnalyzerController.
+    //TestResults, RPi-protocol 3m are handled in Controller before reaching state to handle if
+    //the test is not valid.
     public Character formatStateMessage(String stateMessage) {
         Character stateChar;
         stateChar = stateMessage.charAt(0);

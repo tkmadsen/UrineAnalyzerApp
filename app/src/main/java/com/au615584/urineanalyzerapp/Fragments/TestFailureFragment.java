@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
 
+//Is shown in case of fail in Analysis of urine dipstick on UrineAnalyzerController.
+//Is shown when "3Fejl på test" is received from UrineAnalyzerController.
 public class TestFailureFragment extends Fragment {
 
 

@@ -8,11 +8,12 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Constants;
 
 import java.util.Locale;
 
+//ProRepository handles LoginActivity and ProActivity. This handles logic concerning login and
+//Change of settings eg. change language
 public class ProRepository implements IProRepository{
     //Instance for Singleton pattern
     private static ProRepository instance;
@@ -58,6 +59,7 @@ public class ProRepository implements IProRepository{
 
     }
 
+    //Method used for changing language
     @Override
     public void SetLocal(Activity activity, String langCode) {
         Log.d(Constants.TAG_Rep, "SetLocal: " + langCode);
@@ -71,7 +73,7 @@ public class ProRepository implements IProRepository{
 
 
 
-
+//Method for changing AnalysisType. Not implemented in this project.
     @Override
     public void setStixType(Activity act, String type) {
 

@@ -9,6 +9,7 @@ import com.au615584.urineanalyzerapp.Constants;
 import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.IController;
 
+//Viewmodel for LoginActivity.
 public class LoginViewModel {
     private IController controller;
 

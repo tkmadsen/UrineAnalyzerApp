@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import com.au615584.urineanalyzerapp.R;
 
 
+//Is shown in case of error in sending test results to EPJ
+//Shows the test result on the app to the user
 public class EpjFailureFragment extends Fragment {
 
   private String result;

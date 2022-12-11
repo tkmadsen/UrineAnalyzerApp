@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.ProfessionalAcitivity"
+            android:name=".Activities.ProfessionalActivity"
             android:exported="false" />
     </application>
 

@@ -1,13 +1,12 @@
 package com.au615584.urineanalyzerapp;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.au615584.urineanalyzerapp.Activities.ProfessionalAcitivity;
+import com.au615584.urineanalyzerapp.Activities.ProfessionalActivity;
 import com.au615584.urineanalyzerapp.Bluetooth.IState;
 import com.au615584.urineanalyzerapp.Bluetooth.State;
 import com.au615584.urineanalyzerapp.Repositories.BTRepository;
@@ -34,7 +33,7 @@ public class ControllerTest {
     private IBTRepository mockBtRepo;
     private IEPJRepository mockEPJRepo;
     private IProRepository mockProRepo;
-    private ProfessionalAcitivity mockProAct;
+    private ProfessionalActivity mockProAct;
     private IState mockState;
 
 
@@ -43,7 +42,7 @@ public class ControllerTest {
         mockBtRepo=mock(BTRepository.class);
         mockEPJRepo=mock(EPJRepository.class);
         mockProRepo=mock(ProRepository.class);
-        mockProAct=mock(ProfessionalAcitivity.class);
+        mockProAct=mock(ProfessionalActivity.class);
         mockState=mock(State.class);
         controller = new Controller(mockState,mockProRepo,mockEPJRepo,mockBtRepo);
 

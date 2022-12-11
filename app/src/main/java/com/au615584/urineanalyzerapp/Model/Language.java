@@ -1,5 +1,6 @@
 package com.au615584.urineanalyzerapp.Model;
 
+//Model for language Object used in LanguageAdapter
 public class Language {
     public String language;
     public int imageResourceId;

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.au615584.urineanalyzerapp.Bluetooth.BluetoothConnection;
 import com.au615584.urineanalyzerapp.Bluetooth.IBluetoothConnection;
 
+//BTRepository handles communication and control of BluetoothConnection
 public class BTRepository implements IBTRepository {
     //Instance for Singleton pattern
     private static BTRepository instance;

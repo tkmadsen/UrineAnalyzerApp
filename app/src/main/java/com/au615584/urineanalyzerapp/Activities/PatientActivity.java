@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -26,9 +25,10 @@ import com.au615584.urineanalyzerapp.Fragments.btFailFragment;
 import com.au615584.urineanalyzerapp.R;
 import com.au615584.urineanalyzerapp.ViewModels.PatientViewModel;
 
+//Patient activity maintains all the fragments concerning the user. These are welcome, guide, processing,
+//result and the two error fragments: TestFailureFragment and EpjFailureFragment
 public class PatientActivity extends AppCompatActivity {
 
-    private Button btnTest;
     public String CPR="Default";
     private String btMessage="Default";
     private ImageButton btnPro;
@@ -40,7 +40,6 @@ public class PatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-        //btnTest=findViewById(R.id.testB);
         btnPro=findViewById(R.id.proB);
         vm= new PatientViewModel();
 
@@ -101,6 +100,8 @@ public class PatientActivity extends AppCompatActivity {
             }
         });
 
+        //Updates the view and what fragment to show based on message received from
+        // UrineAnalyzerController over Bluetooth.
         vm.state().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String state) {
@@ -147,32 +148,7 @@ public class PatientActivity extends AppCompatActivity {
                 }
             }
         });
-        /* //TODO uncomment this when testing
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (guideFragment != null && guideFragment.isVisible()) {
-                    getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.fraglist,resultFragment,"RESULT_FRAGMENT")
-                            .commit();
-                }
-                // Open Guide fragment: DENNE VIL SENERE SKULLE KALDES, NÅR KORT SCANNES
-                if (welcomeFragment != null && welcomeFragment.isVisible()) {
-                    showDialouge();
-                    Fragment guideFragment = new GuideFragment("2222225555");
-                    getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.fraglist,guideFragment,"GUIDE_FRAGMENT")
-                            .commit();
-                }
-                // Open Welcome fragment: DENNE SKAL SENERE BARE ÅBNES SOM DEFAULT OG STARTES IGEN, NÅR DATA ER UPLOADED
-                if (resultFragment != null && resultFragment.isVisible()) {
-                    getSupportFragmentManager()
-                            .beginTransaction().replace(R.id.fraglist,welcomeFragment,"WELCOME_FRAGMENT")
-                            .commit();
-                }
-            }
-        });
-        */
+
         btnPro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

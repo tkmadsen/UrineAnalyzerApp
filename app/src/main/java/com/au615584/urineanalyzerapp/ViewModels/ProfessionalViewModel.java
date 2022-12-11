@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.IController;
 
+//Viewmodel for ProfessionalActivity.
 public class ProfessionalViewModel {
     IController controller;
 

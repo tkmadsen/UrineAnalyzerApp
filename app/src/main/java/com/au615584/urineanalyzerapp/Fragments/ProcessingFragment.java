@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.au615584.urineanalyzerapp.R;
 
 
+//Shows processing/analyzing view to user. Is shown when receiving "2" from UrineAnalyzerController.
 public class ProcessingFragment extends Fragment {
   private TextView txtProgress;
   private ProgressBar spinner;

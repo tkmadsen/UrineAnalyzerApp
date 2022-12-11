@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import com.au615584.urineanalyzerapp.Controller;
 import com.au615584.urineanalyzerapp.IController;
 
+//Viewmodel for PatientActivity.
 public class PatientViewModel {
   IController controller;
 

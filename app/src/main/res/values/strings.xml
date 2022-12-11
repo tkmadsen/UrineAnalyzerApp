@@ -1,6 +1,5 @@
 <resources>
   <string name="app_name">UrineAnalyzerApp</string>
-  <!-- TODO: Remove or change this placeholder text -->
   <string name="welcome">Welcome!</string>
   <string name="scan">Please scan social security card</string>
   <string name="guide">1. Collect midstream urine sample \n \n2. Place stix in urine</string>

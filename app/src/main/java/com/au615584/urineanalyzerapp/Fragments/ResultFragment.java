@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 
 import com.au615584.urineanalyzerapp.R;
 
+//Shows resultfragment to user in case of successful analysis of urine dipstick
+//and test results have been sent to EPJ.
 public class ResultFragment extends Fragment {
 
 

@@ -4,6 +4,9 @@ import android.app.Activity;
 
 import androidx.lifecycle.LiveData;
 
+//Interface for ProRepository
+// This makes sure to comply with Dependency Inversion Principle and strategy-pattern
+// with complies with Open Close principle.
 public interface IProRepository {
     void SignIn(String pw);
 

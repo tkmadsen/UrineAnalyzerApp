@@ -1,10 +1,5 @@
 package com.au615584.urineanalyzerapp.Activities;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,8 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+
 import com.au615584.urineanalyzerapp.R;
 import com.au615584.urineanalyzerapp.ViewModels.LoginViewModel;
+
+//LoginActivity shows the user interface for the login-page used by clinicians.
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void GoToProActivity() {
-        Intent intent = new Intent(this, ProfessionalAcitivity.class);
+        Intent intent = new Intent(this, ProfessionalActivity.class);
         proLauncher.launch(intent);
         finish();
         loginViewModel.SignOut();
@@ -72,13 +74,10 @@ public class LoginActivity extends AppCompatActivity {
     private void Login(){
         String password = pw.getText().toString();
         if(password == null || password.length()<1||!password.equals("1234")){
-            //pw.setError(getString(R.string.errorInvalidPassword));
             pw.setError(getString(R.string.errorUserSignIn));
         }
         else {
             loginViewModel.SignIn(password,this);
         }
     }
-
-
 }

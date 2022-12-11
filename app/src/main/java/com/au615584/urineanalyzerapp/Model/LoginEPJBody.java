@@ -2,6 +2,9 @@ package com.au615584.urineanalyzerapp.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+//The GSON object used to create the LoginActivity JSON object sent to EPJ to authenticate the system
+//Is required before sending the test results to EPJ.
 public class LoginEPJBody {
 
   @SerializedName("securityPrincipalId")

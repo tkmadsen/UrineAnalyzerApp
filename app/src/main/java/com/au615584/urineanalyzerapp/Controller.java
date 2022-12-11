@@ -15,7 +15,7 @@ import com.au615584.urineanalyzerapp.Repositories.IEPJRepository;
 import com.au615584.urineanalyzerapp.Repositories.IProRepository;
 import com.au615584.urineanalyzerapp.Repositories.ProRepository;
 
-
+//Controlls all the repositories. This makes sure the code complies with single responsibility principle.
 public class Controller implements IController{
     //Instance for Singleton pattern
     private static Controller instance;

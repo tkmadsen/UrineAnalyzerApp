@@ -3,7 +3,6 @@
     <string name="backBtn">Tilbage</string>
     <string name="CPRdialog">Velkommen 2103971554</string>
     <string name="app_name">UrineAnalyzerApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome">Velkommen!</string>
     <string name="scan">Scan venligst dit sundhedskort</string>
     <string name="guide">1. Opsaml midtstråleurin \n2. Dyp stix i urin</string>
@@ -17,7 +16,7 @@
     <string name="TxtLogin">Tast kode</string>
     <string name="errorInvalidPassword">Forkert kode</string>
     <string name="errorUserSignIn">Login fejlede</string>
-    <string name="guide2Txt">3. Dub stix med papir</string>
+    <string name="guide2Txt">3. Dup stix med papir</string>
     <string name="guide3Txt">4. Placer urinstix i åbningen til venstre på toppen af apparatet. Giv slip når den grønne lampe lyser.  </string>
     <string name="correctTestTXt">Resultat modtaget</string>
     <string name="ProgressTxt">Analyserer</string>

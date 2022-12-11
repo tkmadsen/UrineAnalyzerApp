@@ -38,6 +38,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//EPJRepository handles communication with EPJ-server through REST API set up in ObservationService
 public class EPJRepository implements IEPJRepository {
     //Instance for Singleton pattern
     private static EPJRepository instance;
@@ -55,7 +56,7 @@ public class EPJRepository implements IEPJRepository {
         success = true;
 
 
-        //Creating observationService
+        //Creating observationService with base-URL for EPJ
         Retrofit.Builder obsBuilder = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(client)
@@ -76,7 +77,9 @@ public class EPJRepository implements IEPJRepository {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
+    //Used when testing the system and there is no connection to EPJ-server
+    //This saves til JSON object containing the test result and information about the practice to the log.
+    @RequiresApi(api = Build.VERSION_CODES.O) //This is required for dateTime
     public boolean saveToLog(double Glukose, double Albumin, String Cpr) {
         Observation obs = createObservation(Glukose, Albumin, Cpr);
         Log.d("EPJRepository", new Gson().toJson(obs));
@@ -86,8 +89,11 @@ public class EPJRepository implements IEPJRepository {
     private static String token;
     private static String cookie;
 
-    public boolean saveResultEPJ(double glukose, double albumin, String cpr) {
 
+    //Here the GSON object, later converted to JSON, containing user information and password used for login
+    //is created. On succesful login the saveObsEPJ method is called, which will cass CreateObservation
+    //and send the observation to EPJ.
+    public boolean saveResultEPJ(double glukose, double albumin, String cpr) {
         LoginEPJBody loginBody = new LoginEPJBody();
         loginBody.setCreateSession(true);
         loginBody.setPassword("XXX"); //For safety reasons Security PrincipalID and password has been removed, as they are used internally in Systematic
@@ -124,7 +130,9 @@ public class EPJRepository implements IEPJRepository {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O) //TODO this is required for dateTime
+    //This method is called on succesful login.  Calls createObservation-method and sends the
+    //created observation to EPJ
+    @RequiresApi(api = Build.VERSION_CODES.O) //This is required for dateTime
     @Override
     public boolean saveObsEPJ(double Albumin, double Glukose, String Cpr) {
         Observation obs = createObservation(Albumin, Glukose, Cpr);
@@ -154,6 +162,10 @@ public class EPJRepository implements IEPJRepository {
     }
 
 
+    //Here the GSON object, later converted to JSON, containing information about the practice,
+    // the user information (CPR) and the test results, is created.
+    //The information about the practice is hardcoded but in a real product it should be removed to a database
+    //As it is different for each practice.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Observation createObservation(double Glukose, double Albumin, String CPR) {
         Observation obs = new Observation();
@@ -272,7 +284,8 @@ public class EPJRepository implements IEPJRepository {
         Extension extension2 = new Extension();
         extension2.setUrl("http://columnafhir.dk/x/ColumnaActivityResult-effective-date-time");
         extension2.setValueDateTime("2022-11-24T11:14:00.000+01:00");
-        //extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00"); //TODO tjek med denne
+        //It is not possible to use dynamic ValueDataTime because of the version of Android the tablet uses
+        //extension2.setValueDateTime(java.time.LocalDateTime.now().toString()+"+01:00");
 
         //Adding extenions to list of extentions and adding to observation
         extensionList.add(extension1);
@@ -303,11 +316,12 @@ public class EPJRepository implements IEPJRepository {
 
         obs.setCode(code);
 
-        //Adding subject to observation
+        //Adding subject (patient) to observation
         Subject subject = new Subject();
+        //Here the CPR is set
         subject.setReference("Patient?identifier=http://cpr.dk/personregistret|"+CPR+"&_profile=http://columnafhir.dk/p/ColumnaPatient");
 
-        obs.setSubject(subject); //TODO find ud af hvordan cpr nummer skal tilføjes
+        obs.setSubject(subject);
 
         //Adding componentList to observation
         List<Component> componentList = new ArrayList<>();
@@ -321,7 +335,7 @@ public class EPJRepository implements IEPJRepository {
 
 
         ValueQuantity valueQuantityAlbumin = new ValueQuantity();
-        valueQuantityAlbumin.setValue(Albumin); //TODO her sættes Albumin resultat
+        valueQuantityAlbumin.setValue(Albumin); //Here the result for glucosis is set
         component1_extension.setValueQuantity(valueQuantityAlbumin);
 
 
@@ -349,7 +363,7 @@ public class EPJRepository implements IEPJRepository {
 
         component2_Extension.setUrl("http://columnafhir.dk/x/ObservationComponentComponent-value-quantity");
         ValueQuantity valueQuantityGlucosis = new ValueQuantity();
-        valueQuantityGlucosis.setValue(Glukose); //TODO her sættes glukose resultat
+        valueQuantityGlucosis.setValue(Glukose); //Here the result for glucosis is set
 
         component2_Extension.setValueQuantity(valueQuantityGlucosis);
 

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
+// Bluetoothconnection is the client-side in the Bluetooth-communication between UrineAnalyzerApp and
+//UrineAnalyzerController. This initiates the request and handles write and read methods.
 public class BluetoothConnection implements IBluetoothConnection {
   private BluetoothAdapter btAdapter;
   private BluetoothDevice btDevice;
@@ -49,6 +51,7 @@ public class BluetoothConnection implements IBluetoothConnection {
 
   @SuppressLint("MissingPermission")
   public String findDeviceAddress() {
+    //UrineAnalyzerController and tablet which runs UrineAnalyzerApp have to be paired once.
     ArrayList deviceList = new ArrayList();
     String address = null;
     pairedDevices = btAdapter.getBondedDevices();
@@ -57,6 +60,7 @@ public class BluetoothConnection implements IBluetoothConnection {
       Toast.makeText(UrineAnalyzerApplication.getAppContext(), "No paired devices found", Toast.LENGTH_SHORT).show();
     } else {
       for (BluetoothDevice btDevice : pairedDevices) {
+        //Hardcoded RPi MAC-adress. Should be moved to a database in an ideal project.
         if (btDevice.getAddress().equals("B8:27:EB:C5:3C:8F")) {
           address = btDevice.getAddress();
         }
@@ -85,6 +89,9 @@ public class BluetoothConnection implements IBluetoothConnection {
     private final OutputStream mmOutputStream;
 
 
+    //Thread creates input- and outputsockets, from which messages af read from and send through to
+    //UrineAnalyzerController.
+    //Is threaded to prevent the UI from freezing when creating connection and listenning on inputsocket.
     @SuppressLint("MissingPermission")
     private ConnectThread(BluetoothDevice device) throws IOException {
       BluetoothSocket tmp = null;
@@ -125,6 +132,8 @@ public class BluetoothConnection implements IBluetoothConnection {
       mmOutputStream = tmpOut;
     }
 
+    //Run is an asynchrone method that listens on the inputsocket at all times
+    //Is a thread since this method would freeze the UI.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void run(){
       byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -154,16 +163,7 @@ public class BluetoothConnection implements IBluetoothConnection {
     }
   }
 
-//  private void saveIncoming(String incomingMessage) {
-//    if(incomingMessage.charAt(0)=='1'){
-//      cpr.postValue(incomingMessage.substring(1));
-//      Log.d("BTConnection", "saveCPR: " + cpr);
-//    } else if (incomingMessage.charAt(0) == '3'){
-//      result.postValue(incomingMessage.substring(1));
-//    }
-//  }
-
-
+//btMessage is used to update the rest of the app, when there is an incoming message
   public LiveData<String> btMessage() {
     if(btMessage == null) {
       btMessage = new MutableLiveData<>();
@@ -171,6 +171,8 @@ public class BluetoothConnection implements IBluetoothConnection {
     return btMessage;
   }
 
+  //isBtConnected is used to update the rest of the app about whether bluetooth is connected or not.
+  //If bluetooth is not connected or interrupted the fragment BtFailFragment will be shown to inform the user
   public LiveData<Boolean> isBtConnected() {
     if(isBtConnected == null) {
       isBtConnected = new MutableLiveData<>();
